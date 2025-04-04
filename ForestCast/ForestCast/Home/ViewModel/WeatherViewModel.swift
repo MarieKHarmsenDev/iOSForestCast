@@ -9,10 +9,12 @@ import SwiftUI
 class WeatherViewModel: NSObject, ObservableObject {
     
     var currentWeather: CurrentWeatherModel?
+    var ForecastWeather: ForecastWeatherModel?
     
-    init(currentWeather: CurrentWeatherModel) {
+    init(currentWeather: CurrentWeatherModel, forecastWeather: ForecastWeatherModel) {
         super.init()
         self.currentWeather = currentWeather
+        self.ForecastWeather = forecastWeather
     }
     
     var backgroundColor: Color {

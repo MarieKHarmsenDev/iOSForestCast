@@ -18,26 +18,28 @@ struct WeatherView: View {
     var body: some View {
         VStack {
             if let imageName = viewModel?.currentWeather?.weatherType.rawValue,
-               let tempCurrent = viewModel?.currentWeather?.tempString,
+               let tempCurrent = viewModel?.currentWeather?.temperatureString,
                let description = viewModel?.descriptionLocalized {
                 topImage(imageName: imageName, temp: tempCurrent, description: description)
                     .padding(.bottom, 8)
             }
-            if let tempMin = viewModel?.currentWeather?.tempMinString,
-               let tempCurrent = viewModel?.currentWeather?.tempString,
-               let tempMax = viewModel?.currentWeather?.tempMaxString {
-                currentWeatherInfo(tempMin: tempMin,
-                                   tempCurrent: tempCurrent,
-                                   tempMax: tempMax)
+            if let temperatureMin = viewModel?.currentWeather?.temperatureMinString,
+               let temperatureCurrent = viewModel?.currentWeather?.temperatureString,
+               let temperatureMax = viewModel?.currentWeather?.temperatureMaxString {
+                currentWeatherInfo(temperatureMin: temperatureMin,
+                                   temperatureCurrent: temperatureCurrent,
+                                   temperatureMax: temperatureMax)
             }
             Divider()
                 .frame(height: 2)
                 .background(Color.white)
                 .padding(.bottom, 16)
-            dailyWeatherInfo
+            if let forecastdays = viewModel?.ForecastWeather?.forecastDays {
+                dailyWeatherInfo(days: forecastdays)
+            }
             Spacer()
         }
-        .background(viewModel?.backgroundColor)
+        .background(viewModel?.backgroundColor.edgesIgnoringSafeArea(.bottom))
     }
     
     private func topImage(imageName: String, temp: String, description: String) -> some View {
@@ -55,30 +57,32 @@ struct WeatherView: View {
                 }, alignment: .top)
     }
     
-    private func currentWeatherInfo(tempMin: String, tempCurrent: String, tempMax: String) -> some View {
+    private func currentWeatherInfo(temperatureMin: String, temperatureCurrent: String, temperatureMax: String) -> some View {
         HStack {
-            weatherColumn(temp: tempMin, description: "weatherScreen.min".localized)
+            weatherColumn(temperature: temperatureMin, description: "weatherScreen.min".localized)
                 .padding(.leading)
             Spacer()
-            weatherColumn(temp: tempCurrent, description: "weatherScreen.current".localized)
+            weatherColumn(temperature: temperatureCurrent, description: "weatherScreen.current".localized)
             Spacer()
-            weatherColumn(temp: tempMax, description: "weatherScreen.max".localized)
+            weatherColumn(temperature: temperatureMax, description: "weatherScreen.max".localized)
                 .padding(.trailing)
         }
     }
     
-    private func weatherColumn(temp: String, description: String) -> some View {
+    private func weatherColumn(temperature: String, description: String) -> some View {
         VStack {
-            RegularBold(text: temp + "°")
+            RegularBold(text: temperature)
             Regular(text: description)
         }
     }
     
-    private var dailyWeatherInfo: some View {
+    private func dailyWeatherInfo(days: [ForecastDays]) -> some View {
         VStack(spacing: 16) {
-            //ForEach(HomeViewModel.DaysOfWeek.allCases, id: \.self) { day in
-             //   weatherRow(day: day.rawValue, iconName: "clearIcon", temp: "20")
-          //  }
+            ForEach(0..<5, id: \.self) { index in
+                weatherRow(day: days[index].dayOfWeek,
+                           iconName: days[index].weatherType.rawValue+"Icon",
+                           temp: days[index].temperatureString)
+            }
         }
     }
     
@@ -96,8 +100,4 @@ struct WeatherView: View {
                 .frame(width: 24, height: 24),
             alignment: .center)
     }
-}
-
-#Preview {
-    WeatherView(viewModel: WeatherViewModel(currentWeather: CurrentWeatherModel(temp: 12.1, tempMin: 12.2, tempMax: 112.3, weatherType: .clouds)))
 }

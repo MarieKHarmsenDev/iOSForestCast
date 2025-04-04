@@ -12,20 +12,20 @@ enum WeatherType: String {
 }
 
 struct CurrentWeatherModel {
-    let temp: Double
-    let tempMin: Double
-    let tempMax: Double
+    let temperature: Double
+    let temperatureMin: Double
+    let temperatureMax: Double
     let weatherType: WeatherType
     
-    var tempString: String {
-        return String(format: "%.f", temp)
+    var temperatureString: String {
+        return String(format: "%.f", temperature) + "°"
     }
     
-    var tempMinString: String {
-        return String(format: "%.f", tempMin)
+    var temperatureMinString: String {
+        return String(format: "%.f", temperatureMin) + "°"
     }
     
-    var tempMaxString: String {
-        return String(format: "%.f", tempMax)
+    var temperatureMaxString: String {
+        return String(format: "%.f", temperatureMax) + "°"
     }
 }
