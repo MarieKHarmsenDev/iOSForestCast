@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  ForestCast
 //
 //  Created by Marie Harmsen on 03/04/2025.
@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    private let viewModel = HomeViewModel()
+    
+    @StateObject private var viewModel = HomeViewModel()
+
     private let isIPad = UIDevice.current.userInterfaceIdiom == .pad
     
     var body: some View {
@@ -62,9 +64,9 @@ struct HomeView: View {
     
     private var dailyWeatherInfo: some View {
         VStack(spacing: 16) {
-            ForEach(HomeViewModel.DaysOfWeek.allCases, id: \.self) { day in
-                weatherRow(day: day.rawValue, iconName: "clearIcon", temp: "20")
-            }
+            //ForEach(HomeViewModel.DaysOfWeek.allCases, id: \.self) { day in
+             //   weatherRow(day: day.rawValue, iconName: "clearIcon", temp: "20")
+          //  }
         }
     }
     
