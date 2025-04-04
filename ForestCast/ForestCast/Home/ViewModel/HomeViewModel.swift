@@ -9,20 +9,17 @@ import SwiftUI
 import Foundation
 import CoreLocation
 
-class HomeViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
-    
+class HomeViewModel: NSObject, ObservableObject {
+
     private var locationManager = CLLocationManager()
     private var network = HomeNetworkManager()
+    @Published var currentWeather: CurrentWeatherModel? = nil
     
     override init() {
         super.init()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-    }
-    
-    var backgroundColor: Color {
-        return Color.sunny
     }
     
     private func isLocationAuthorised() {
@@ -39,10 +36,9 @@ class HomeViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             break
         }
     }
-    
-    func requestPermissions() {
-        isLocationAuthorised()
-    }
+}
+
+extension HomeViewModel: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         isLocationAuthorised()
@@ -54,7 +50,11 @@ class HomeViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             let currentLatitude = location.coordinate.latitude
             let currentLongitude = location.coordinate.longitude
             network.fetchWeatherData(lat: String(describing: currentLatitude),
-                                     long: String(describing: currentLongitude))
-       }
+                                     long: String(describing: currentLongitude)) { [weak self] weather in
+                DispatchQueue.main.async {
+                    self?.currentWeather = weather
+                }
+            }
+        }
     }
 }

@@ -1,0 +1,18 @@
+//
+//  ForestCast.strings
+//  ForestCast
+//
+//  Created by Marie Harmsen on 04/04/2025.
+//
+
+"weatherScreen.min" = "min";
+
+"weatherScreen.current" = "Current";
+
+"weatherScreen.max" = "max";
+
+"weatherScreen.sunny" = "SUNNY";
+
+"weatherScreen.cloudy" = "CLOUDY";
+
+"weatherScreen.rainy" = "RAINY";
