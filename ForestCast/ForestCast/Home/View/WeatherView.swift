@@ -39,7 +39,7 @@ struct WeatherView: View {
             }
             Spacer()
         }
-        .background(viewModel?.backgroundColor)
+        .background(viewModel?.backgroundColor.edgesIgnoringSafeArea(.bottom))
     }
     
     private func topImage(imageName: String, temp: String, description: String) -> some View {
