@@ -25,7 +25,6 @@ struct Title2: View {
 
     var body: some View {
         Text(text)
-            .textCase(.uppercase)
             .font(.system(size: 32))
             .foregroundColor(color)
             .kerning(4)
