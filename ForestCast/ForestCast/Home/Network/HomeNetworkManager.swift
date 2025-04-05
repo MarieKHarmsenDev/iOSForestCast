@@ -33,7 +33,11 @@ class HomeNetworkManager: HomeNetworkManagerProtocol {
                 }
                 let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                     if let data = data {
-                        completion(.success(self?.decodeCurrentWeatherData(data)))
+                        if let decodedData = self?.decodeCurrentWeatherData(data) {
+                            completion(.success(decodedData))
+                        } else {
+                            completion(.failure(.decodeDataProblem))
+                        }
                     } else {
                         self?.networkLogger.logError(error: "Failed to fetch current weather")
                         completion(.failure(.noData))
@@ -57,7 +61,11 @@ class HomeNetworkManager: HomeNetworkManagerProtocol {
                 }
                 let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                     if let data = data {
-                        completion(.success(self?.decodeForecastWeatherData(data)))
+                        if let decodedData = self?.decodeForecastWeatherData(data) {
+                            completion(.success(decodedData))
+                        } else {
+                            completion(.failure(.decodeDataProblem))
+                        }
                     } else {
                         self?.networkLogger.logError(error: "Failed to decode forecast weather")
                         completion(.failure(.decodeDataProblem))
