@@ -13,4 +13,6 @@ struct ForecastWeatherData: Codable {
 struct WeatherItem: Codable {
     let main: Main
     let weather: [Weather]
+    let dtTxt: String
+    let dt: TimeInterval
 }

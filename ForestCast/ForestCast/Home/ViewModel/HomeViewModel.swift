@@ -15,6 +15,7 @@ class HomeViewModel: NSObject, ObservableObject {
     private var network = HomeNetworkManager()
     @Published var currentWeather: CurrentWeatherModel? = nil
     @Published var forecastWeather: ForecastWeatherModel? = nil
+    @Published var shouldShowError: Bool = false
         
     override init() {
         super.init()
@@ -34,7 +35,7 @@ class HomeViewModel: NSObject, ObservableObject {
         case .authorizedAlways, .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
         @unknown default:
-            break
+            locationManager.requestWhenInUseAuthorization()
         }
     }
 }
@@ -51,16 +52,26 @@ extension HomeViewModel: CLLocationManagerDelegate {
             let currentLatitude = location.coordinate.latitude
             let currentLongitude = location.coordinate.longitude
             network.fetchCurrentWeatherData(lat: String(describing: currentLatitude),
-                                            long: String(describing: currentLongitude)) { [weak self] weather in
+                                            long: String(describing: currentLongitude)) { [weak self] result in
                 DispatchQueue.main.async {
-                    self?.currentWeather = weather
+                    switch result {
+                    case .success(let weather):
+                        self?.currentWeather = weather
+                    case .failure(_):
+                        self?.shouldShowError = true
+                    }
                 }
             }
             
             network.fetchForecastWeatherData(lat: String(describing: currentLatitude),
-                                             long: String(describing: currentLongitude)) { [weak self] forecast in
+                                             long: String(describing: currentLongitude)) { [weak self] result in
                 DispatchQueue.main.async {
-                    self?.forecastWeather = forecast
+                    switch result {
+                    case .success(let forecast):
+                        self?.forecastWeather = forecast
+                    case .failure(_):
+                        self?.shouldShowError = true
+                    }
                 }
             }
         }
