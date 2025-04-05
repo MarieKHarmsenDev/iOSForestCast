@@ -7,12 +7,17 @@
 import Foundation
 
 struct ForecastDays {
-    let dayOfWeek: String
-    let temp: Double
+    let date: String
+    let dateInterval: TimeInterval
+    let temprature: Double
     let weatherType: WeatherType
     
     var temperatureString: String {
-        return String(format: "%.f", temp)
+        return String(format: "%.f", temprature)
+    }
+    
+    var dayOfWeek: String {
+        return date.dayOfWeek
     }
 }
 

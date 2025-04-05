@@ -6,9 +6,16 @@
 //
 import FirebaseDatabase
 
+enum NetworkError: Error {
+    case apiKey
+    case malformedURL
+    case decodeDataProblem
+    case noData
+}
+
 protocol HomeNetworkManagerProtocol {
-    func fetchCurrentWeatherData(lat: String, long: String, completion: @escaping(CurrentWeatherModel?) -> Void)
-    func fetchForecastWeatherData(lat: String, long: String, completion: @escaping(ForecastWeatherModel?) -> Void)
+    func fetchCurrentWeatherData(lat: String, long: String, completion: @escaping(Result<CurrentWeatherModel?, NetworkError>) -> Void)
+    func fetchForecastWeatherData(lat: String, long: String, completion: @escaping(Result<ForecastWeatherModel?, NetworkError>) -> Void)
     func fetchAPIWeatherKey(completion: @escaping(String?) -> Void)
 }
 
@@ -16,53 +23,58 @@ class HomeNetworkManager: HomeNetworkManagerProtocol {
     
     private let networkLogger = NetworkLogger()
     
-    func fetchCurrentWeatherData(lat: String, long: String, completion: @escaping(CurrentWeatherModel?) -> Void) {
+    func fetchCurrentWeatherData(lat: String, long: String, completion: @escaping(Result<CurrentWeatherModel?, NetworkError>) -> Void) {
         fetchAPIWeatherKey { [weak self] apiKey in
             guard let self = self else { return }
-            guard let apiKey = apiKey else {
-                networkLogger.logError(error: "Failed to get current API key")
-                completion(nil)
-                return
-            }
-            guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
-                completion(nil)
-                networkLogger.logError(error: "Malformed current weather URL")
-                return
-            }
-            let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                if let data = data {
-                    completion(self?.decodeCurrentWeatherData(data))
-                } else {
-                    self?.networkLogger.logError(error: "Failed to fetch current weather")
-                    completion(nil)
+            if let apiKey = apiKey {
+                guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
+                    completion(.failure(.malformedURL))
+                    return
                 }
+                let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                    if let data = data {
+                        if let decodedData = self?.decodeCurrentWeatherData(data) {
+                            completion(.success(decodedData))
+                        } else {
+                            completion(.failure(.decodeDataProblem))
+                        }
+                    } else {
+                        self?.networkLogger.logError(error: "Failed to fetch current weather")
+                        completion(.failure(.noData))
+                    }
+                }
+                task.resume()
+            } else {
+                completion(.failure(.noData))
             }
-            task.resume()
         }
     }
     
-    func fetchForecastWeatherData(lat: String, long: String, completion: @escaping(ForecastWeatherModel?) -> Void) {
+    func fetchForecastWeatherData(lat: String, long: String, completion: @escaping(Result<ForecastWeatherModel?, NetworkError>) -> Void) {
         fetchAPIWeatherKey { [weak self] apiKey in
             guard let self = self else { return }
-            guard let apiKey = apiKey else {
-                networkLogger.logError(error: "Failed to get forecast API key")
-                completion(nil)
-                return
-            }
-            guard let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
-                networkLogger.logError(error: "Malformed forecast URL")
-                completion(nil)
-                return
-            }
-            let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                if let data = data {
-                    completion(self?.decodeForecastWeatherData(data))
-                } else {
-                    self?.networkLogger.logError(error: "Failed to decode forecast weather")
-                    completion(nil)
+            if let apiKey = apiKey {
+                guard let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
+                    networkLogger.logError(error: "Malformed forecast URL")
+                    completion(.failure(.malformedURL))
+                    return
                 }
+                let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                    if let data = data {
+                        if let decodedData = self?.decodeForecastWeatherData(data) {
+                            completion(.success(decodedData))
+                        } else {
+                            completion(.failure(.decodeDataProblem))
+                        }
+                    } else {
+                        self?.networkLogger.logError(error: "Failed to decode forecast weather")
+                        completion(.failure(.decodeDataProblem))
+                    }
+                }
+                task.resume()
+            } else {
+                completion(.failure(.noData))
             }
-            task.resume()
         }
     }
     
@@ -75,10 +87,7 @@ class HomeNetworkManager: HomeNetworkManagerProtocol {
                 self?.networkLogger.logError(error: "Failed to fetch API key")
                 completion(nil)
             }
-        }) { [weak self] error in
-            self?.networkLogger.logError(error: "Failed to fetch API key \(error)")
-            completion(nil)
-        }
+        })
     }
     
     private func decodeCurrentWeatherData(_ data: Data) -> CurrentWeatherModel? {
@@ -110,21 +119,47 @@ class HomeNetworkManager: HomeNetworkManagerProtocol {
             let decodeData = try decoder.decode(ForecastWeatherData.self, from: data)
             
             var allForecastDays = [ForecastDays]()
-            let _ = decodeData.list.prefix(5).map { forecast in
-                let temp = forecast.main.temp
+            for forecast in decodeData.list {
+                let date = forecast.dtTxt
+                let dateInterval = forecast.dt
+                let temprature = forecast.main.temp
                 guard let weatherTypeString = forecast.weather.first?.main.lowercased(),
                       let weatherType = WeatherType(rawValue: weatherTypeString) else {
                     networkLogger.logError(error: "Failed to decode weather type")
-                    return
+                    return nil
                 }
-                let days = ForecastDays(dayOfWeek: "Monday", temp: temp, weatherType: weatherType)
+                let days = ForecastDays(date: date, dateInterval: dateInterval, temprature: temprature, weatherType: weatherType)
                 allForecastDays.append(days)
             }
+            let currentHour = Calendar.current.component(.hour, from: Date())
             
-            return ForecastWeatherModel(forecastDays: allForecastDays)
+            return ForecastWeatherModel(forecastDays: getFilteredForecastDaysBasedOnClosestTime(allForecastDays: allForecastDays, closestHour: currentHour))
         } catch {
             networkLogger.logError(error: "Failed to decode forecast weather")
             return nil
         }
+    }
+    
+    private func getFilteredForecastDaysBasedOnClosestTime(allForecastDays: [ForecastDays], closestHour: Int) -> [ForecastDays] {
+        var forecastResults = [ForecastDays]()
+        let groupedByDay = Dictionary(grouping: allForecastDays) { entry in
+            return String(entry.date.day)
+        }
+        
+        let sortedgroups = groupedByDay.keys.sorted()
+        
+        for (_, date) in sortedgroups.enumerated() {
+            guard let entries = groupedByDay[date] else { continue }
+            let closest = entries.min(by: { a,b in
+                let aHour = Calendar.current.component(.hour, from: Date(timeIntervalSince1970: a.dateInterval))
+                let bHour = Calendar.current.component(.hour, from: Date(timeIntervalSince1970: b.dateInterval))
+                return abs(aHour-closestHour) < abs(bHour-closestHour)
+            })
+            
+            if let closest = closest {
+                forecastResults.append(closest)
+            }
+        }
+        return forecastResults
     }
 }

@@ -11,7 +11,9 @@ struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
-        if let currentWeather = viewModel.currentWeather,
+        if viewModel.shouldShowError {
+            ErrorView()
+        } else if let currentWeather = viewModel.currentWeather,
            let forecastWeather = viewModel.forecastWeather {
             WeatherView(viewModel: WeatherViewModel(currentWeather: currentWeather, forecastWeather: forecastWeather))
         } else {
