@@ -15,7 +15,7 @@ class HomeNetworkManagerMock: HomeNetworkManagerProtocol {
         self.responseType = responseType
     }
     
-    func fetchAPIWeatherKey(completion: @escaping (Result<String, ForestCast.NetworkError>) -> Void) {
+    func fetchAPIWeatherKey(completion: @escaping (Result<String, NetworkError>) -> Void) {
         switch responseType {
         case .success:
             return completion(.success("APIKeyMock"))

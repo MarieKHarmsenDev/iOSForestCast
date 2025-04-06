@@ -16,3 +16,11 @@
 "weatherScreen.cloudy" = "CLOUDY";
 
 "weatherScreen.rainy" = "RAINY";
+
+"locationPermission.alertTitle" = "App needs your location";
+
+"locationPermission.alertMessage" = "This app needs your location";
+
+"locationPermission.alertSettings" = "Open Settings";
+
+"locationPermission.alertCancel" = "Cancel";

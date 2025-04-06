@@ -11,18 +11,20 @@ import CoreLocation
 
 class HomeViewModel: NSObject, ObservableObject {
 
-    private var locationManager = CLLocationManager()
+    private var locationManager: CLLocationManager?
     private var network: HomeNetworkManagerProtocol?
     private let networkLogger = NetworkLogger()
     @Published var shouldShowError: Bool = false
     @Published var isLoading: Bool = true
+    @Published var shouldShowAlert: Bool = false
     var apiKey: String?
     var latitude: Double?
     var longitude: Double?
         
-    init(network: HomeNetworkManagerProtocol) {
+    init(locationManager: CLLocationManager, network: HomeNetworkManagerProtocol) {
         super.init()
         self.network = network
+        self.locationManager = locationManager
         locationManager.delegate = self
         fetchAPIKey()
     }
@@ -41,22 +43,20 @@ class HomeViewModel: NSObject, ObservableObject {
     }
     
     private func getUserLocation() {
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        locationManager?.requestWhenInUseAuthorization()
+        locationManager?.startUpdatingLocation()
     }
     
     private func isLocationAuthorised() {
-        switch locationManager.authorizationStatus {
+        switch locationManager?.authorizationStatus {
         case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted:
-            print("error")
-        case .denied:
-            print("error a")
+            locationManager?.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            shouldShowAlert = true
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-        @unknown default:
-            locationManager.requestWhenInUseAuthorization()
+            locationManager?.startUpdatingLocation()
+        default:
+            locationManager?.requestWhenInUseAuthorization()
         }
     }
 }
@@ -69,7 +69,7 @@ extension HomeViewModel: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            locationManager.stopUpdatingLocation()
+            locationManager?.stopUpdatingLocation()
             latitude = location.coordinate.latitude
             longitude = location.coordinate.longitude
             isLoading = false
