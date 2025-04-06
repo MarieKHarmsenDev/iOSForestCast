@@ -13,13 +13,33 @@ class HomeViewModel: NSObject, ObservableObject {
 
     private var locationManager = CLLocationManager()
     private var network = HomeNetworkManager()
-    @Published var currentWeather: CurrentWeatherModel? = nil
-    @Published var forecastWeather: ForecastWeatherModel? = nil
+    private let networkLogger = NetworkLogger()
     @Published var shouldShowError: Bool = false
+    @Published var isLoading: Bool = true
+    var apiKey: String?
+    var latitude: Double?
+    var longitude: Double?
         
     override init() {
         super.init()
         locationManager.delegate = self
+        fetchAPIKey()
+    }
+    
+    private func fetchAPIKey() {
+        network.fetchAPIWeatherKey { [weak self] result in
+            switch result {
+            case .success(let apiKey):
+                self?.apiKey = apiKey
+                self?.getUserLocation()
+            case .failure(let error):
+                self?.networkLogger.logError("API Key error \(error)")
+                self?.shouldShowError = true
+            }
+        }
+    }
+    
+    private func getUserLocation() {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
@@ -49,31 +69,9 @@ extension HomeViewModel: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             locationManager.stopUpdatingLocation()
-            let currentLatitude = location.coordinate.latitude
-            let currentLongitude = location.coordinate.longitude
-            network.fetchCurrentWeatherData(lat: String(describing: currentLatitude),
-                                            long: String(describing: currentLongitude)) { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let weather):
-                        self?.currentWeather = weather
-                    case .failure(_):
-                        self?.shouldShowError = true
-                    }
-                }
-            }
-            
-            network.fetchForecastWeatherData(lat: String(describing: currentLatitude),
-                                             long: String(describing: currentLongitude)) { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let forecast):
-                        self?.forecastWeather = forecast
-                    case .failure(_):
-                        self?.shouldShowError = true
-                    }
-                }
-            }
+            latitude = location.coordinate.latitude
+            longitude = location.coordinate.longitude
+            isLoading = false
         }
     }
 }

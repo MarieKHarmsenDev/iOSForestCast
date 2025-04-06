@@ -6,15 +6,71 @@
 //
 import SwiftUI
 
+struct Location {
+    let latitude: Double
+    let longitude: Double
+}
+
 class WeatherViewModel: NSObject, ObservableObject {
     
+    var apiKey: String?
+    var location: Location?
+    var network: WeatherNetworkManagerProtocol?
+    var networkLogger = NetworkLogger()
     var currentWeather: CurrentWeatherModel?
-    var ForecastWeather: ForecastWeatherModel?
+    var forecastWeather: ForecastWeatherModel?
+    @Published var shouldShowError = false
+    @Published var isLoading = true
     
-    init(currentWeather: CurrentWeatherModel, forecastWeather: ForecastWeatherModel) {
+    init(apiKey: String, location: Location, network: WeatherNetworkManagerProtocol) {
         super.init()
-        self.currentWeather = currentWeather
-        self.ForecastWeather = forecastWeather
+        self.apiKey = apiKey
+        self.location = location
+        self.network = network
+        fetchData()
+    }
+    
+    private func fetchData() {
+        let group = DispatchGroup()
+        guard let location = location,
+            let apiKey = apiKey else {
+            return
+        }
+        let lat = String(describing: location.latitude)
+        let long = String(describing: location.longitude)
+        
+        group.enter()
+        network?.fetchCurrentWeatherData(apiKey: apiKey,
+                                        lat: lat,
+                                        long: long) { [weak self] result in
+            switch result {
+            case .success(let weather):
+                self?.currentWeather = weather
+                group.leave()
+            case .failure(let error):
+                self?.networkLogger.logError("Failed to fetch current weather \(error)")
+                self?.shouldShowError = true
+            }
+        }
+        
+        group.enter()
+        network?.fetchForecastWeatherData(apiKey: apiKey,
+                                         lat: lat,
+                                         long: long) { [weak self] result in
+            switch result {
+            case .success(let forecast):
+                self?.forecastWeather = forecast
+                group.leave()
+            case .failure(let error):
+                self?.networkLogger.logError("Failed to fetch forecast weather \(error)")
+                self?.shouldShowError = true
+            }
+        }
+        
+        group.notify(queue: .main) { [weak self] in
+            self?.isLoading = false
+        }
+        
     }
     
     var backgroundColor: Color {
@@ -43,4 +99,3 @@ class WeatherViewModel: NSObject, ObservableObject {
         }
     }
 }
-
