@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct ForecastDays: Equatable {
+struct ForecastDays: Equatable, Hashable {
     let date: String
     let dateInterval: TimeInterval
     let temprature: Double

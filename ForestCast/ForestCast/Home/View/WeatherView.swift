@@ -17,7 +17,6 @@ struct WeatherView: View {
             LoadingView()
         } else {
             WeatherContentView(viewModel: viewModel)
-                .toolbarBackground(Color.yellow, for: .tabBar)
         }
     }
 }
@@ -88,11 +87,11 @@ struct WeatherContentView: View {
     
     private func dailyWeatherInfo(days: [ForecastDays]) -> some View {
         VStack(spacing: 16) {
-//            ForEach(days) { day in
-//                weatherRow(day: day.dayOfWeek,
-//                           iconName: day.weatherType.rawValue+"Icon",
-//                           temp: day.temperatureString)
-//            }
+            ForEach(days, id: \.self) { day in
+                weatherRow(day: day.dayOfWeek,
+                           iconName: day.weatherType.rawValue+"Icon",
+                           temp: day.temperatureString)
+            }
         }
     }
     
