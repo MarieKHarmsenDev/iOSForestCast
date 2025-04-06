@@ -59,7 +59,7 @@ class WeatherNetworkManagerTests: XCTestCase {
             return
         }
         let forecastDayOne = ForecastDays(date: "2025-04-06 18:00:00", dateInterval: 1743962400, temprature: 9.31, weatherType: .clouds)
-        let forecastDayTwo = ForecastDays(date: "2025-04-07 18:00:00", dateInterval: 1744038000, temprature: 10.18, weatherType: .clear)
+        let forecastDayTwo = ForecastDays(date: "2025-04-07 18:00:00", dateInterval: 1744048800, temprature: 10.18, weatherType: .clear)
         let forecastDayThree = ForecastDays(date: "2025-04-08 18:00:00", dateInterval: 1744135200, temprature: 10.58, weatherType: .clear)
         let forecastDayFour = ForecastDays(date: "2025-04-09 18:00:00", dateInterval: 1744221600, temprature: 11.09, weatherType: .clouds)
         let forecastDayFive = ForecastDays(date: "2025-04-10 18:00:00", dateInterval: 1744308000, temprature: 11.42, weatherType: .clouds)
