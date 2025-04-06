@@ -102,19 +102,24 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         
         let sortedgroups = groupedByDay.keys.sorted()
         
-        for (index, date) in sortedgroups.enumerated() {
-            if index == 0 { continue }
+        for (_, date) in sortedgroups.enumerated() {
+            if isTodaysDate(date: date) { continue }
             guard let entries = groupedByDay[date] else { continue }
-            let closest = entries.min(by: { a,b in
-                let aHour = Calendar.current.component(.hour, from: Date(timeIntervalSince1970: a.dateInterval))
-                let bHour = Calendar.current.component(.hour, from: Date(timeIntervalSince1970: b.dateInterval))
-                return abs(aHour-closestHour) < abs(bHour-closestHour)
+            let closest = entries.min(by: { earliestTime, latestTime in
+                let earliestHour = Calendar.current.component(.hour, from: Date(timeIntervalSince1970: earliestTime.dateInterval))
+                let latestHour = Calendar.current.component(.hour, from: Date(timeIntervalSince1970: latestTime.dateInterval))
+                return abs(earliestHour-closestHour) < abs(latestHour-closestHour)
             })
             
             if let closest = closest {
                 forecastResults.append(closest)
             }
+            if forecastResults.count == 5 { break }
         }
         return forecastResults
+    }
+    
+    private func isTodaysDate(date: String) -> Bool {
+        return date == Date().dateAsString
     }
 }
