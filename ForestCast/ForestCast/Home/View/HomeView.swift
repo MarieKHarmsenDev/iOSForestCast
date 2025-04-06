@@ -31,7 +31,7 @@ struct HomeView: View {
             WeatherView(viewModel: WeatherViewModel(apiKey: apiKey,
                                                     location: Location(latitude: latitude,
                                                                        longitude: longitude),
-                                                    network: WeatherNetworkManager()))
+                                                    network: WeatherNetworkManager(todaysDate: Date())))
         }
     }
 }

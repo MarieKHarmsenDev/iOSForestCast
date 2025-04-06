@@ -88,11 +88,11 @@ struct WeatherContentView: View {
     
     private func dailyWeatherInfo(days: [ForecastDays]) -> some View {
         VStack(spacing: 16) {
-            ForEach(days) { day in
-                weatherRow(day: day.dayOfWeek,
-                           iconName: day.weatherType.rawValue+"Icon",
-                           temp: day.temperatureString)
-            }
+//            ForEach(days) { day in
+//                weatherRow(day: day.dayOfWeek,
+//                           iconName: day.weatherType.rawValue+"Icon",
+//                           temp: day.temperatureString)
+//            }
         }
     }
     

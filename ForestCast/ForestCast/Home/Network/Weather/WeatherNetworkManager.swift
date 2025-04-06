@@ -14,6 +14,11 @@ protocol WeatherNetworkManagerProtocol {
 class WeatherNetworkManager: WeatherNetworkManagerProtocol {
     
     private let networkLogger = NetworkLogger()
+    private let todaysDate: Date?
+    
+    init(todaysDate: Date) {
+        self.todaysDate = todaysDate
+    }
     
     func fetchCurrentWeatherData(apiKey: String, lat: String, long: String, completion: @escaping(Result<CurrentWeatherModel?, NetworkError>) -> Void) {
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
@@ -120,6 +125,6 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
     }
     
     private func isTodaysDate(date: String) -> Bool {
-        return date == Date().dateAsString
+        return date == todaysDate?.dateAsString
     }
 }

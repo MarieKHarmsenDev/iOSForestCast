@@ -6,9 +6,7 @@
 //
 import Foundation
 
-struct ForecastDays: Equatable, Identifiable {
-    let id = UUID()
-
+struct ForecastDays: Equatable {
     let date: String
     let dateInterval: TimeInterval
     let temprature: Double
