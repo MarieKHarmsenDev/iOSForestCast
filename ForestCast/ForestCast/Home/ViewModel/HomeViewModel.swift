@@ -12,7 +12,7 @@ import CoreLocation
 class HomeViewModel: NSObject, ObservableObject {
 
     private var locationManager = CLLocationManager()
-    private var network = HomeNetworkManager()
+    private var network: HomeNetworkManagerProtocol?
     private let networkLogger = NetworkLogger()
     @Published var shouldShowError: Bool = false
     @Published var isLoading: Bool = true
@@ -20,14 +20,15 @@ class HomeViewModel: NSObject, ObservableObject {
     var latitude: Double?
     var longitude: Double?
         
-    override init() {
+    init(network: HomeNetworkManagerProtocol) {
         super.init()
+        self.network = network
         locationManager.delegate = self
         fetchAPIKey()
     }
     
     private func fetchAPIKey() {
-        network.fetchAPIWeatherKey { [weak self] result in
+        network?.fetchAPIWeatherKey { [weak self] result in
             switch result {
             case .success(let apiKey):
                 self?.apiKey = apiKey

@@ -11,7 +11,7 @@ enum WeatherType: String {
     case clouds
 }
 
-struct CurrentWeatherModel {
+struct CurrentWeatherModel: Equatable {
     let temperature: Double
     let temperatureMin: Double
     let temperatureMax: Double

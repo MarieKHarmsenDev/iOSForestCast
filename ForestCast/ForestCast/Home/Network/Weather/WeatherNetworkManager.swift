@@ -36,7 +36,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             return
         }
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            if let data = data, let decodedData = self?.decodeForecastWeatherData(data) {
+            if let data = data, let decodedData = self?.decodeForecastWeatherData(data, currentHour: Calendar.current.component(.hour, from: Date())) {
                 completion(.success(decodedData))
             } else {
                 completion(.failure(.noData))
@@ -45,7 +45,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         task.resume()
     }
     
-    private func decodeCurrentWeatherData(_ data: Data) -> CurrentWeatherModel? {
+    func decodeCurrentWeatherData(_ data: Data) -> CurrentWeatherModel? {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
@@ -67,7 +67,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         }
     }
     
-    private func decodeForecastWeatherData(_ data: Data) -> ForecastWeatherModel? {
+    func decodeForecastWeatherData(_ data: Data, currentHour: Int) -> ForecastWeatherModel? {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
@@ -86,7 +86,6 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
                 let days = ForecastDays(date: date, dateInterval: dateInterval, temprature: temprature, weatherType: weatherType)
                 allForecastDays.append(days)
             }
-            let currentHour = Calendar.current.component(.hour, from: Date())
             
             return ForecastWeatherModel(forecastDays: getFilteredForecastDaysBasedOnClosestTime(allForecastDays: allForecastDays, closestHour: currentHour))
         } catch {
@@ -103,7 +102,8 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         
         let sortedgroups = groupedByDay.keys.sorted()
         
-        for (_, date) in sortedgroups.enumerated() {
+        for (index, date) in sortedgroups.enumerated() {
+            if index == 0 { continue }
             guard let entries = groupedByDay[date] else { continue }
             let closest = entries.min(by: { a,b in
                 let aHour = Calendar.current.component(.hour, from: Date(timeIntervalSince1970: a.dateInterval))
