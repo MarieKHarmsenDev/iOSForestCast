@@ -9,7 +9,7 @@
 
 class NetworkLogger {
     
-    func logError(error: String) {
+    func logError(_ error: String) {
         print(error)
     }
 }

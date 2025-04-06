@@ -8,24 +8,33 @@
 import SwiftUI
 
 struct WeatherView: View {
-    private let isIPad = UIDevice.current.userInterfaceIdiom == .pad
-    private var viewModel: WeatherViewModel?
+    @StateObject var viewModel: WeatherViewModel
     
-    init(viewModel: WeatherViewModel) {
-        self.viewModel = viewModel
+    var body: some View {
+        if viewModel.shouldShowError {
+            ErrorView()
+        } else if viewModel.isLoading {
+            LoadingView()
+        } else {
+            WeatherContentView(viewModel: viewModel)
+        }
     }
+}
+
+struct WeatherContentView: View {
+    private let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+    @StateObject var viewModel: WeatherViewModel
     
     var body: some View {
         VStack {
-            if let imageName = viewModel?.currentWeather?.weatherType.rawValue,
-               let tempCurrent = viewModel?.currentWeather?.temperatureString,
-               let description = viewModel?.descriptionLocalized {
-                topImage(imageName: imageName, temp: tempCurrent, description: description)
+            if let imageName = viewModel.currentWeather?.weatherType.rawValue,
+               let tempCurrent = viewModel.currentWeather?.temperatureString {
+                topImage(imageName: imageName, temp: tempCurrent, description: viewModel.descriptionLocalized)
                     .padding(.bottom, 8)
             }
-            if let temperatureMin = viewModel?.currentWeather?.temperatureMinString,
-               let temperatureCurrent = viewModel?.currentWeather?.temperatureString,
-               let temperatureMax = viewModel?.currentWeather?.temperatureMaxString {
+            if let temperatureMin = viewModel.currentWeather?.temperatureMinString,
+               let temperatureCurrent = viewModel.currentWeather?.temperatureString,
+               let temperatureMax = viewModel.currentWeather?.temperatureMaxString {
                 currentWeatherInfo(temperatureMin: temperatureMin,
                                    temperatureCurrent: temperatureCurrent,
                                    temperatureMax: temperatureMax)
@@ -34,12 +43,12 @@ struct WeatherView: View {
                 .frame(height: 2)
                 .background(Color.white)
                 .padding(.bottom, 16)
-            if let forecastdays = viewModel?.ForecastWeather?.forecastDays {
+            if let forecastdays = viewModel.forecastWeather?.forecastDays {
                 dailyWeatherInfo(days: forecastdays)
             }
             Spacer()
         }
-        .background(viewModel?.backgroundColor.edgesIgnoringSafeArea(.bottom))
+        .background(viewModel.backgroundColor.edgesIgnoringSafeArea(.bottom))
     }
     
     private func topImage(imageName: String, temp: String, description: String) -> some View {

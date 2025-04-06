@@ -41,6 +41,13 @@
 			);
 			target = 52F83E1C2D9EAF15002A6FA1 /* ForestCast */;
 		};
+		52F855FE2DA1E2B600DE6C53 /* Exceptions for "ForestCast" folder in "ForestCastTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ReusableComponents/TextStyles.swift,
+			);
+			target = 52F83E2D2D9EAF17002A6FA1 /* ForestCastTests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -48,6 +55,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				52F8401F2D9F3401002A6FA1 /* Exceptions for "ForestCast" folder in "ForestCast" target */,
+				52F855FE2DA1E2B600DE6C53 /* Exceptions for "ForestCast" folder in "ForestCastTests" target */,
 			);
 			path = ForestCast;
 			sourceTree = "<group>";

@@ -13,11 +13,13 @@ struct HomeView: View {
     var body: some View {
         if viewModel.shouldShowError {
             ErrorView()
-        } else if let currentWeather = viewModel.currentWeather,
-           let forecastWeather = viewModel.forecastWeather {
-            WeatherView(viewModel: WeatherViewModel(currentWeather: currentWeather, forecastWeather: forecastWeather))
-        } else {
+        } else if viewModel.isLoading {
             LoadingView()
+        } else if let apiKey = viewModel.apiKey, let latitude = viewModel.latitude, let longitude = viewModel.longitude {
+            WeatherView(viewModel: WeatherViewModel(apiKey: apiKey,
+                                                    location: Location(latitude: latitude,
+                                                                       longitude: longitude),
+                                                    network: WeatherNetworkManager()))
         }
     }
 }
