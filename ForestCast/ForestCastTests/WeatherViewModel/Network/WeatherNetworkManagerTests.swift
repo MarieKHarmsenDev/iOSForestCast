@@ -14,10 +14,19 @@ import SwiftUI
 
 class WeatherNetworkManagerTests: XCTestCase {
     
-    var sut = WeatherNetworkManager()
+    var sut: WeatherNetworkManager!
     private var fileReader = FileReader()
     
     // MARK: CurrentWeather
+    
+    override func setUp() {
+        let specificDate = Calendar.current.date(from: DateComponents(year: 2025, month: 4, day: 5))
+        sut = WeatherNetworkManager(todaysDate: specificDate!)
+    }
+    
+    override func tearDown() {
+        sut = nil
+    }
     
     func testfetchCurrentWeatherData_malformedURL() {
         sut.fetchCurrentWeatherData(apiKey: "123", lat: "<>", long: "") { result in
@@ -84,6 +93,26 @@ class WeatherNetworkManagerTests: XCTestCase {
         let allForecastDays = [forecastDayOne, forecastDayTwo, forecastDayThree, forecastDayFour, forecastDayFive]
         let expectedResult = ForecastWeatherModel(forecastDays: allForecastDays)
         let result = sut.decodeForecastWeatherData(data, currentHour: 16)
+        XCTAssertEqual(result, expectedResult)
+    }
+    
+    func testDecodeForecastWeatherData_noDataForCurrentDay() {
+        guard let data = fileReader.readJSONFile(fileName: "ForecastWeatherNoDataForToday") else {
+            XCTFail("Data issue")
+            return
+        }
+        let specificDate6April = Calendar.current.date(from: DateComponents(year: 2025, month: 4, day: 6))
+        let sutNoData = WeatherNetworkManager(todaysDate: specificDate6April!)
+
+        let forecastDayOne = ForecastDays(date: "2025-04-07 15:00:00", dateInterval: 1744038000, temprature: 12.59, weatherType: .clear)
+        let forecastDayTwo = ForecastDays(date: "2025-04-08 15:00:00", dateInterval: 1744124400, temprature: 14.2, weatherType: .clear)
+        let forecastDayThree = ForecastDays(date: "2025-04-09 15:00:00", dateInterval: 1744210800, temprature: 14.69, weatherType: .clear)
+        let forecastDayFour = ForecastDays(date: "2025-04-10 15:00:00", dateInterval: 1744297200, temprature: 17.32, weatherType: .clear)
+        let forecastDayFive = ForecastDays(date: "2025-04-11 15:00:00", dateInterval: 1744383600, temprature: 20.03, weatherType: .clouds)
+        
+        let allForecastDays = [forecastDayOne, forecastDayTwo, forecastDayThree, forecastDayFour, forecastDayFive]
+        let expectedResult = ForecastWeatherModel(forecastDays: allForecastDays)
+        let result = sutNoData.decodeForecastWeatherData(data, currentHour: 16)
         XCTAssertEqual(result, expectedResult)
     }
 }

@@ -48,7 +48,7 @@ struct WeatherContentView: View {
             }
             Spacer()
         }
-        .background(viewModel.backgroundColor.edgesIgnoringSafeArea(.bottom))
+        .background(viewModel.backgroundColor)
     }
     
     private func topImage(imageName: String, temp: String, description: String) -> some View {
@@ -87,10 +87,10 @@ struct WeatherContentView: View {
     
     private func dailyWeatherInfo(days: [ForecastDays]) -> some View {
         VStack(spacing: 16) {
-            ForEach(0..<5, id: \.self) { index in
-                weatherRow(day: days[index].dayOfWeek,
-                           iconName: days[index].weatherType.rawValue+"Icon",
-                           temp: days[index].temperatureString)
+            ForEach(days, id: \.self) { day in
+                weatherRow(day: day.dayOfWeek,
+                           iconName: day.weatherType.rawValue+"Icon",
+                           temp: day.temperatureString)
             }
         }
     }
