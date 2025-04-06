@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var viewModel = HomeViewModel(network: HomeNetworkManager())
     
     var body: some View {
         if viewModel.shouldShowError {
