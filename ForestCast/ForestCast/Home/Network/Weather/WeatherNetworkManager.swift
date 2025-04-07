@@ -59,13 +59,17 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             let temperatureMin = decodeData.main.tempMin
             let temperatureMax = decodeData.main.tempMax
             let temperature = decodeData.main.temp
+            let name = decodeData.name
+            let id = decodeData.id
             guard let weatherTypeString = decodeData.weather.first?.main.lowercased(),
                   let weatherType = WeatherType(rawValue: weatherTypeString) else {
                 networkLogger.logError("Failed to convert weather type")
                 return nil
             }
             return CurrentWeatherModel(temperature: temperature, temperatureMin: temperatureMin,
-                                       temperatureMax: temperatureMax, weatherType: weatherType)
+                                       temperatureMax: temperatureMax, weatherType: weatherType,
+                                       name: name,
+                                       id: id)
         } catch {
             networkLogger.logError("Failed to decode current weather")
             return nil

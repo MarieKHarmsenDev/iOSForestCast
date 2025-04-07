@@ -8,6 +8,8 @@
 struct CurrentWeatherData: Codable {
     let main: Main
     let weather: [Weather]
+    let name: String
+    let id: Int
 }
 
 struct Main: Codable {

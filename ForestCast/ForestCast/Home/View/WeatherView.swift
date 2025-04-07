@@ -46,7 +46,12 @@ struct WeatherContentView: View {
             if let forecastdays = viewModel.forecastWeather?.forecastDays {
                 dailyWeatherInfo(days: forecastdays)
             }
+            favouritesButton
+                .padding()
             Spacer()
+        }
+        .onAppear {
+            viewModel.updateIcon()
         }
         .background(viewModel.backgroundColor)
     }
@@ -109,4 +114,27 @@ struct WeatherContentView: View {
                 .frame(width: 24, height: 24),
             alignment: .center)
     }
+    
+    private var favouritesButton: some View {
+        HStack {
+            Spacer()
+            Button(action : {
+                viewModel.updateFavourites()
+            }) {
+                ZStack {
+                    Circle()
+                        .fill(viewModel.containsFavourite ? .red : .gray)
+                    
+                    Image(systemName: "heart")
+                        .foregroundColor(.white)
+                        .padding()
+                }
+            }
+            .frame(width: 44, height: 44)
+        }
+    }
+}
+
+#Preview {
+    WeatherView(viewModel: WeatherViewModel(apiKey: "123", location: Location(latitude: 123, longitude: 11), network: WeatherNetworkManager(todaysDate: Date())))
 }

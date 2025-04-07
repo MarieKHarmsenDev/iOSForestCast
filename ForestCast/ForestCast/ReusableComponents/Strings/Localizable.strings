@@ -24,3 +24,7 @@
 "locationPermission.alertSettings" = "Open Settings";
 
 "locationPermission.alertCancel" = "Cancel";
+
+"favourites.heading" = "City list";
+
+"favourites.noFavourites" = "There are no favourites saved yet.";

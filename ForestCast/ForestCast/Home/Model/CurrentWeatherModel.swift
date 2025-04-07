@@ -7,15 +7,17 @@
 
 enum WeatherType: String {
     case clear
-    case rainy
+    case rain
     case clouds
 }
 
-struct CurrentWeatherModel: Equatable {
+struct CurrentWeatherModel: Equatable, Hashable {
     let temperature: Double
     let temperatureMin: Double
     let temperatureMax: Double
     let weatherType: WeatherType
+    let name: String
+    let id: Int
     
     var temperatureString: String {
         return String(format: "%.f", temperature) + "°"
