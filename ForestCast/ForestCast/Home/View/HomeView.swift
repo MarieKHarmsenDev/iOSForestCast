@@ -27,9 +27,8 @@ struct HomeView: View {
                 } message: {
                     Regular(text: "locationPermission.alertMessage".localized)
                 }
-        } else if let apiKey = viewModel.apiKey, let latitude = viewModel.latitude, let longitude = viewModel.longitude {
-            WeatherView(viewModel: WeatherViewModel(apiKey: apiKey,
-                                                    location: Location(latitude: latitude,
+        } else if !viewModel.isLoading, let latitude = viewModel.latitude, let longitude = viewModel.longitude {
+            WeatherView(viewModel: WeatherViewModel(location: Location(latitude: latitude,
                                                                        longitude: longitude),
                                                     network: WeatherNetworkManager(todaysDate: Date())))
         }

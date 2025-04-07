@@ -13,44 +13,47 @@ struct Location: Codable {
 }
 
 class WeatherViewModel: NSObject, ObservableObject {
+    private var location: Location?
+    var shouldShowFavourites: Bool = false
+    private var network: WeatherNetworkManagerProtocol?
     
-    var cities = [String]()
-    
-    var apiKey: String?
-    var location: Location?
-    var network: WeatherNetworkManagerProtocol?
-    var networkLogger = NetworkLogger()
+    private var networkLogger = NetworkLogger()
+    private var favourites = FavouritesManager()
+
     var currentWeather: CurrentWeatherModel?
     var forecastWeather: ForecastWeatherModel?
+    var currentLocationAsFavourite: FavouritesWeatherModel?
+
     @Published var shouldShowError = false
     @Published var isLoading = true
     @Published var containsFavourite: Bool = false
-    private var favourites = FavouritesManager()
     
-    init(apiKey: String, location: Location, network: WeatherNetworkManagerProtocol) {
+    init(location: Location, shouldShowFavourites: Bool = true, network: WeatherNetworkManagerProtocol) {
         super.init()
-        self.apiKey = apiKey
         self.location = location
         self.network = network
+        self.shouldShowFavourites = shouldShowFavourites
         fetchData()
     }
     
     private func fetchData() {
         let group = DispatchGroup()
-        guard let location = location,
-            let apiKey = apiKey else {
+        guard let location = location else {
             return
         }
         let lat = String(describing: location.latitude)
         let long = String(describing: location.longitude)
         
         group.enter()
-        network?.fetchCurrentWeatherData(apiKey: apiKey,
-                                        lat: lat,
-                                        long: long) { [weak self] result in
+        network?.fetchCurrentWeatherData(lat: lat,
+                                         long: long) { [weak self] result in
             switch result {
             case .success(let weather):
                 self?.currentWeather = weather
+                guard let weather = weather else { return }
+                self?.currentLocationAsFavourite = FavouritesWeatherModel(id: weather.id,
+                                                                          name: weather.name,
+                                                                          location: location)
                 group.leave()
             case .failure(let error):
                 self?.networkLogger.logError("Failed to fetch current weather \(error)")
@@ -61,9 +64,8 @@ class WeatherViewModel: NSObject, ObservableObject {
         }
         
         group.enter()
-        network?.fetchForecastWeatherData(apiKey: apiKey,
-                                         lat: lat,
-                                         long: long) { [weak self] result in
+        network?.fetchForecastWeatherData(lat: lat,
+                                          long: long) { [weak self] result in
             switch result {
             case .success(let forecast):
                 self?.forecastWeather = forecast
@@ -110,30 +112,20 @@ class WeatherViewModel: NSObject, ObservableObject {
     }
     
     func updateFavourites() {
-        guard let currentWeather = currentWeather, let location = location else {
-            return
-        }
-        let favourite = FavouritesWeatherModel(id: currentWeather.id,
-                                               name: currentWeather.name,
-                                               location: location)
-        if favourites.contains(favourite) {
-            favourites.remove(favourite)
+        guard let currentLocationAsFavourite = currentLocationAsFavourite else { return }
+        if favourites.contains(currentLocationAsFavourite) {
+            favourites.remove(currentLocationAsFavourite)
         } else {
-            favourites.add(favourite)
+            favourites.add(currentLocationAsFavourite)
         }
         updateIcon()
     }
     
     func updateIcon() {
-        guard let currentWeather = currentWeather, let location = location else {
-            return
-        }
-        let favourite = FavouritesWeatherModel(id: currentWeather.id,
-                                               name: currentWeather.name,
-                                               location: location)
+        guard let currentLocationAsFavourite = currentLocationAsFavourite else { return }
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.containsFavourite = self.favourites.contains(favourite)
+            self.containsFavourite = favourites.contains(currentLocationAsFavourite)
         }
     }
 }

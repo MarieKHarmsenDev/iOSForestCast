@@ -17,5 +17,6 @@ class FavourtiesViewModel: NSObject, ObservableObject {
     func deleteFavourite(favourite: FavouritesWeatherModel?) {
         guard let favourite = favourite else { return }
         favouritesManager.remove(favourite)
+        favourites = favouritesManager.getFavouriteLocations()
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 class FavouritesManager: ObservableObject {
     private let key = "Favourites"
-    
+        
     func getFavouriteLocations() -> [FavouritesWeatherModel] {
         guard let data = UserDefaults.standard.data(forKey: key),
               let locations = try? JSONDecoder().decode([FavouritesWeatherModel].self, from: data) else {
