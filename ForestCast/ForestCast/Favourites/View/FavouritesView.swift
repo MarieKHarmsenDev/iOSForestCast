@@ -19,7 +19,6 @@ struct FavouritesView: View {
             }
             Spacer()
         }
-        .navigationTitle("Test")
         .onAppear {
             viewModel.fetchFavourites()
         }
