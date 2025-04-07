@@ -17,6 +17,7 @@ struct ControlView: View {
                 FavouritesView()
             }
         }
+        .tint(Color.tint)
         .onAppear() {
             UITabBar.appearance().backgroundColor = .white
         }

@@ -29,7 +29,7 @@ class WeatherNetworkManagerTests: XCTestCase {
     }
     
     func testfetchCurrentWeatherData_malformedURL() {
-        sut.fetchCurrentWeatherData(apiKey: "123", lat: "<>", long: "") { result in
+        sut.fetchCurrentWeatherData(lat: "<>", long: "") { result in
             switch result {
             case .success(_):
                 XCTFail("This should fail due to invalid characters in URL")
@@ -44,7 +44,7 @@ class WeatherNetworkManagerTests: XCTestCase {
             XCTFail("Data issue")
             return
         }
-        let expectedResult = CurrentWeatherModel(temperature: 19.0, temperatureMin: 18.48, temperatureMax: 20.81, weatherType: .clear)
+        let expectedResult = CurrentWeatherModel(temperature: 19.0, temperatureMin: 18.48, temperatureMax: 20.81, weatherType: .clear, name: "Abbey Wood", id: 7302135)
         let result = sut.decodeCurrentWeatherData(data)
         XCTAssertEqual(result, expectedResult)
     }
@@ -52,7 +52,7 @@ class WeatherNetworkManagerTests: XCTestCase {
     // MARK: ForecastWeather
 
     func testfetchForecastWeatherData_malformedURL() {
-        sut.fetchForecastWeatherData(apiKey: "123", lat: "<>", long: "") { result in
+        sut.fetchForecastWeatherData(lat: "<>", long: "") { result in
             switch result {
             case .success(_):
                 XCTFail("This should fail due to invalid characters in URL")

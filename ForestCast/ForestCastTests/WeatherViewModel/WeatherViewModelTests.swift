@@ -16,9 +16,10 @@ class WeatherViewModelTests: XCTestCase {
     
     var sut: WeatherViewModel!
     
+    private let currentFavourite = FavouritesWeatherModel(id: 1, name: "Johannesburg", location: Location(latitude: 1, longitude: 2))
+    
     func createSUT(type: WeatherType) -> WeatherViewModel {
-        return WeatherViewModel(apiKey: "123",
-                                location: Location(latitude: 11.1, longitude: 12.2),
+        return WeatherViewModel(location: Location(latitude: 11.1, longitude: 12.2),
                                 network: WeatherNetworkManagerMock(weatherType: type))
     }
     
@@ -35,7 +36,7 @@ class WeatherViewModelTests: XCTestCase {
     }
     
     func testRainyWeather_textAndColor() {
-        let sut = createSUT(type: .rainy)
+        let sut = createSUT(type: .rain)
         XCTAssertEqual(sut.backgroundColor, Color.rainy)
         XCTAssertEqual(sut.descriptionLocalized, "RAINY")
     }

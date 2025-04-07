@@ -17,7 +17,6 @@ class HomeViewModel: NSObject, ObservableObject {
     @Published var shouldShowError: Bool = false
     @Published var isLoading: Bool = true
     @Published var shouldShowAlert: Bool = false
-    var apiKey: String?
     var latitude: Double?
     var longitude: Double?
         
@@ -33,8 +32,9 @@ class HomeViewModel: NSObject, ObservableObject {
         network?.fetchAPIWeatherKey { [weak self] result in
             switch result {
             case .success(let apiKey):
-                self?.apiKey = apiKey
+                KeyManager.shared.setApiKey(key: apiKey)
                 self?.getUserLocation()
+                self?.isLoading = false
             case .failure(let error):
                 self?.networkLogger.logError("API Key error \(error)")
                 self?.shouldShowError = true
@@ -72,7 +72,6 @@ extension HomeViewModel: CLLocationManagerDelegate {
             locationManager?.stopUpdatingLocation()
             latitude = location.coordinate.latitude
             longitude = location.coordinate.longitude
-            isLoading = false
         }
     }
 }

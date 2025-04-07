@@ -46,8 +46,10 @@ struct WeatherContentView: View {
             if let forecastdays = viewModel.forecastWeather?.forecastDays {
                 dailyWeatherInfo(days: forecastdays)
             }
-            favouritesButton
-                .padding()
+            if viewModel.shouldShowFavourites {
+                favouritesButton
+                    .padding()
+            }
             Spacer()
         }
         .onAppear {
@@ -136,5 +138,5 @@ struct WeatherContentView: View {
 }
 
 #Preview {
-    WeatherView(viewModel: WeatherViewModel(apiKey: "123", location: Location(latitude: 123, longitude: 11), network: WeatherNetworkManager(todaysDate: Date())))
+    WeatherView(viewModel: WeatherViewModel(location: Location(latitude: 123, longitude: 11), shouldShowFavourites: true, network: WeatherNetworkManager(todaysDate: Date())))
 }

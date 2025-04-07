@@ -11,7 +11,6 @@ struct FavouritesView: View {
     
     var body: some View {
         VStack {
-            Title2(text: "favourites.heading".localized, color: .black)
             if viewModel.favourites.isEmpty {
                 Spacer()
                 emptyFavourites
@@ -20,17 +19,26 @@ struct FavouritesView: View {
             }
             Spacer()
         }
+        .navigationTitle("Test")
         .onAppear {
             viewModel.fetchFavourites()
         }
     }
     
     var favouritesListView: some View {
-        List() {
-            ForEach(viewModel.favourites) { favourite in
-                Regular(text: favourite.name, color: .black)
+        NavigationView {
+            VStack {
+                Title2(text: "favourites.heading".localized, color: .black)
+                List() {
+                    ForEach(viewModel.favourites) { favourite in
+                        NavigationLink(favourite.name,
+                                       destination: WeatherView(viewModel: WeatherViewModel(location: Location(latitude: favourite.location.latitude, longitude: favourite.location.longitude),
+                                                                                            shouldShowFavourites: false,
+                                                                                            network: WeatherNetworkManager(todaysDate: Date()))))
+                    }
+                    .onDelete(perform: removeRows)
+                }
             }
-            .onDelete(perform: removeRows)
         }
     }
     
@@ -41,7 +49,12 @@ struct FavouritesView: View {
     }
     
     var emptyFavourites: some View {
-        Regular(text: "favourites.noFavourites".localized, color: .black)
+        VStack {
+            Title2(text: "favourites.heading".localized, color: .black)
+            Spacer()
+            Regular(text: "favourites.noFavourites".localized, color: .black)
+            Spacer()
+        }
     }
 }
 

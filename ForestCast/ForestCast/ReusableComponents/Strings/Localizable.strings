@@ -25,6 +25,6 @@
 
 "locationPermission.alertCancel" = "Cancel";
 
-"favourites.heading" = "City list";
+"favourites.heading" = "Favourite cities";
 
 "favourites.noFavourites" = "There are no favourites saved yet.";

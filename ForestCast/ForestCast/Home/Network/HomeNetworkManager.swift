@@ -12,7 +12,7 @@ protocol HomeNetworkManagerProtocol {
 }
 
 class HomeNetworkManager: HomeNetworkManagerProtocol {
-
+    
     func fetchAPIWeatherKey(completion: @escaping(Result<String, NetworkError>) -> Void) {
         let reference = Database.database().reference()
         reference.child("APIWeatherKey").observeSingleEvent(of: .value, with: { snapshot in

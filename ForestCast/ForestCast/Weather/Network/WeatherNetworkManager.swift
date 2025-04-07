@@ -7,8 +7,8 @@
 import Foundation
 
 protocol WeatherNetworkManagerProtocol {
-    func fetchCurrentWeatherData(apiKey: String, lat: String, long: String, completion: @escaping(Result<CurrentWeatherModel?, NetworkError>) -> Void)
-    func fetchForecastWeatherData(apiKey: String, lat: String, long: String, completion: @escaping(Result<ForecastWeatherModel?, NetworkError>) -> Void)
+    func fetchCurrentWeatherData(lat: String, long: String, completion: @escaping(Result<CurrentWeatherModel?, NetworkError>) -> Void)
+    func fetchForecastWeatherData(lat: String, long: String, completion: @escaping(Result<ForecastWeatherModel?, NetworkError>) -> Void)
 }
 
 class WeatherNetworkManager: WeatherNetworkManagerProtocol {
@@ -20,7 +20,8 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         self.todaysDate = todaysDate
     }
     
-    func fetchCurrentWeatherData(apiKey: String, lat: String, long: String, completion: @escaping(Result<CurrentWeatherModel?, NetworkError>) -> Void) {
+    func fetchCurrentWeatherData(lat: String, long: String, completion: @escaping(Result<CurrentWeatherModel?, NetworkError>) -> Void) {
+        let apiKey = KeyManager.shared.apiKey
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
             completion(.failure(.malformedURL))
             return
@@ -35,7 +36,8 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         task.resume()
     }
     
-    func fetchForecastWeatherData(apiKey: String, lat: String, long: String, completion: @escaping(Result<ForecastWeatherModel?, NetworkError>) -> Void) {
+    func fetchForecastWeatherData(lat: String, long: String, completion: @escaping(Result<ForecastWeatherModel?, NetworkError>) -> Void) {
+        let apiKey = KeyManager.shared.apiKey
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
             completion(.failure(.malformedURL))
             return
