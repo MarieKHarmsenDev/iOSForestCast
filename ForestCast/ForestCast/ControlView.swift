@@ -13,7 +13,7 @@ struct ControlView: View {
             Tab("Home", systemImage: "house") {
                 HomeView()
             }
-            Tab("Favourites", systemImage: "star") {
+            Tab("Favourites", systemImage: "heart.fill") {
                 FavouritesView()
             }
         }
