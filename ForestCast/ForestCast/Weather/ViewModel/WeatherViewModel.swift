@@ -51,8 +51,12 @@ class WeatherViewModel: NSObject, ObservableObject {
             case .success(let weather):
                 self?.currentWeather = weather
                 guard let weather = weather else { return }
+                var name = weather.name
+                if name.isEmpty {
+                    name = "Lat:\(location.latitude) Lon: \(location.longitude)"
+                }
                 self?.currentLocationAsFavourite = FavouritesWeatherModel(id: weather.id,
-                                                                          name: weather.name,
+                                                                          name: name,
                                                                           location: location)
                 group.leave()
             case .failure(let error):
