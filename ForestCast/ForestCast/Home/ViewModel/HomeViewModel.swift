@@ -18,8 +18,6 @@ class HomeViewModel: NSObject, ObservableObject {
     @Published var hasFetchedKey: Bool = false
     @Published var hasFetchedLocation: Bool = false
     @Published var shouldShowAlert: Bool = false
-    var latitude: Double?
-    var longitude: Double?
         
     init(locationManager: CLLocationManager, network: HomeNetworkManagerProtocol) {
         super.init()

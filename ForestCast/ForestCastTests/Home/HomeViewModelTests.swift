@@ -37,8 +37,9 @@ class HomeViewModelTests: XCTestCase {
         sut = createSUT(response: .success)
         let locationMock = CLLocation(latitude: 52.1, longitude: 53.1)
         locationManager.delegate?.locationManager?(locationManager, didUpdateLocations: [locationMock])
-        XCTAssertFalse(sut.isLoading)
-        XCTAssertNotNil(sut.latitude)
-        XCTAssertNotNil(sut.longitude)
+        XCTAssertTrue(sut.hasFetchedKey)
+        XCTAssertNotNil(LocationValuesManager.shared.latitude)
+        XCTAssertNotNil(LocationValuesManager.shared.longitude)
+        XCTAssertTrue(sut.hasFetchedLocation)
     }
 }
