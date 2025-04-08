@@ -5,6 +5,7 @@
 //  Created by Marie Harmsen on 06/04/2025.
 
 import SwiftUI
+import _MapKit_SwiftUI
 
 struct FavouritesView: View {
     @StateObject private var viewModel = FavourtiesViewModel()
@@ -28,16 +29,33 @@ struct FavouritesView: View {
         NavigationView {
             VStack {
                 Title2(text: "favourites.heading".localized, color: .black)
-                List() {
-                    ForEach(viewModel.favourites) { favourite in
-                        NavigationLink(favourite.name,
-                                       destination: WeatherView(viewModel: WeatherViewModel(location: Location(latitude: favourite.location.latitude, longitude: favourite.location.longitude),
-                                                                                            shouldShowFavourites: false,
-                                                                                            network: WeatherNetworkManager(todaysDate: Date()))))
-                    }
-                    .onDelete(perform: removeRows)
-                }
+                favouritesMap
+                favouritesList
             }
+            .navigationTitle("favourites.title".localized)
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    var favouritesMap: some View {
+        Map(position: $viewModel.position, selection: $viewModel.selectedItem) {
+            ForEach(viewModel.favourites) { destination in
+                Marker(destination.name, coordinate: destination.coordinates)
+                    .tint(Color.tint)
+            }
+        }.mapControls {
+            MapUserLocationButton()
+        }
+    }
+    
+    var favouritesList: some View {
+        List() {
+            ForEach(viewModel.favourites) { favourite in
+                NavigationLink(favourite.name,
+                               destination: WeatherView(viewModel: WeatherViewModel(location: favourite.location, shouldShowFavourites: false,
+                                                                                    network: WeatherNetworkManager(todaysDate: Date()))))
+            }
+            .onDelete(perform: removeRows)
         }
     }
     

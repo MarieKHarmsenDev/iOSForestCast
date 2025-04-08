@@ -29,10 +29,10 @@ class WeatherNetworkManagerTests: XCTestCase {
     }
     
     func testfetchCurrentWeatherData_malformedURL() {
-        sut.fetchCurrentWeatherData(lat: "<>", long: "") { result in
+        sut.fetchCurrentWeatherData { result in
             switch result {
             case .success(_):
-                XCTFail("This should fail due to invalid characters in URL")
+                XCTFail("This should fail due to no location")
             case .failure(let error):
                 XCTAssertEqual(error, .malformedURL)
             }
@@ -52,10 +52,10 @@ class WeatherNetworkManagerTests: XCTestCase {
     // MARK: ForecastWeather
 
     func testfetchForecastWeatherData_malformedURL() {
-        sut.fetchForecastWeatherData(lat: "<>", long: "") { result in
+        sut.fetchForecastWeatherData { result in
             switch result {
             case .success(_):
-                XCTFail("This should fail due to invalid characters in URL")
+                XCTFail("This should fail due to no location")
             case .failure(let error):
                 XCTAssertEqual(error, .malformedURL)
             }
