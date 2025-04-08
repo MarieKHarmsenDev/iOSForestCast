@@ -1,5 +1,5 @@
 //
-//  FavouriteWeatherModel.swift
+//  FavouritesWeatherModel.swift
 //  ForestCast
 //
 //  Created by Marie Harmsen on 07/04/2025.

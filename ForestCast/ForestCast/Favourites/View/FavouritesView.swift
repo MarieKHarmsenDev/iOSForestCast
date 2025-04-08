@@ -25,7 +25,7 @@ struct FavouritesView: View {
         }
     }
     
-    var favouritesListView: some View {
+    private var favouritesListView: some View {
         NavigationView {
             VStack {
                 Title2(text: "favourites.heading".localized, color: .black)
@@ -37,7 +37,7 @@ struct FavouritesView: View {
         }
     }
     
-    var favouritesMap: some View {
+    private var favouritesMap: some View {
         Map(position: $viewModel.position, selection: $viewModel.selectedItem) {
             ForEach(viewModel.favourites) { destination in
                 Marker(destination.name, coordinate: destination.coordinates)
@@ -48,7 +48,7 @@ struct FavouritesView: View {
         }
     }
     
-    var favouritesList: some View {
+    private var favouritesList: some View {
         List() {
             ForEach(viewModel.favourites) { favourite in
                 NavigationLink(favourite.name,
@@ -59,13 +59,13 @@ struct FavouritesView: View {
         }
     }
     
-    func removeRows(at offsets: IndexSet) {
+    private func removeRows(at offsets: IndexSet) {
         for index in offsets {
             viewModel.deleteFavourite(favourite: viewModel.favourites[index])
         }
     }
     
-    var emptyFavourites: some View {
+    private var emptyFavourites: some View {
         VStack {
             Title2(text: "favourites.heading".localized, color: .black)
             Spacer()

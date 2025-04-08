@@ -7,11 +7,6 @@
 import SwiftUI
 import CoreLocation
 
-struct Location: Codable {
-    let latitude: Double
-    let longitude: Double
-}
-
 class WeatherViewModel: NSObject, ObservableObject {
     private var location: Location?
     var shouldShowFavourites: Bool = false
@@ -28,7 +23,9 @@ class WeatherViewModel: NSObject, ObservableObject {
     @Published var isLoading = true
     @Published var containsFavourite: Bool = false
     
-    init(location: Location, shouldShowFavourites: Bool = true, network: WeatherNetworkManagerProtocol) {
+    init(location: Location? = Location(latitude: LocationValuesManager.shared.latitude, longitude: LocationValuesManager.shared.longitude),
+         shouldShowFavourites: Bool = true,
+         network: WeatherNetworkManagerProtocol) {
         super.init()
         self.location = location
         self.network = network

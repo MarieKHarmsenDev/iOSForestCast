@@ -16,6 +16,9 @@ struct ControlView: View {
             Tab("Favourites", systemImage: "heart.fill") {
                 FavouritesView()
             }
+            Tab("Nearby", systemImage: "location") {
+                NearbyView()
+            }
         }
         .tint(Color.tint)
         .onAppear() {

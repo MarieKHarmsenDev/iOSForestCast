@@ -21,7 +21,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
     }
     
     func fetchCurrentWeatherData(lat: String, long: String, completion: @escaping(Result<CurrentWeatherModel?, NetworkError>) -> Void) {
-        let apiKey = KeyManager.shared.apiKey
+        let apiKey = KeyManager.shared.getAPIKey()
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
             completion(.failure(.malformedURL))
             return
@@ -37,7 +37,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
     }
     
     func fetchForecastWeatherData(lat: String, long: String, completion: @escaping(Result<ForecastWeatherModel?, NetworkError>) -> Void) {
-        let apiKey = KeyManager.shared.apiKey
+        let apiKey = KeyManager.shared.getAPIKey()
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
             completion(.failure(.malformedURL))
             return

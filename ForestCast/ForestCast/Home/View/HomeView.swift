@@ -15,7 +15,9 @@ struct HomeView: View {
     var body: some View {
         if viewModel.shouldShowError {
             ErrorView()
-        } else if viewModel.isLoading {
+        } else if viewModel.hasFetchedKey, viewModel.hasFetchedLocation {
+            WeatherView(viewModel: WeatherViewModel(network: WeatherNetworkManager(todaysDate: Date())))
+        } else {
             LoadingView()
                 .alert("locationPermission.alertTitle".localized, isPresented: $viewModel.shouldShowAlert) {
                     Button("locationPermission.alertSettings".localized) {
@@ -27,10 +29,6 @@ struct HomeView: View {
                 } message: {
                     Regular(text: "locationPermission.alertMessage".localized)
                 }
-        } else if !viewModel.isLoading, let latitude = viewModel.latitude, let longitude = viewModel.longitude {
-            WeatherView(viewModel: WeatherViewModel(location: Location(latitude: latitude,
-                                                                       longitude: longitude),
-                                                    network: WeatherNetworkManager(todaysDate: Date())))
         }
     }
 }
