@@ -19,8 +19,7 @@ class WeatherViewModelTests: XCTestCase {
     private let currentFavourite = FavouritesWeatherModel(id: 1, name: "Johannesburg", location: Location(latitude: 1, longitude: 2))
     
     func createSUT(type: WeatherType) -> WeatherViewModel {
-        return WeatherViewModel(location: Location(latitude: 11.1, longitude: 12.2),
-                                network: WeatherNetworkManagerMock(weatherType: type))
+        return WeatherViewModel(network: WeatherNetworkManagerMock(weatherType: type))
     }
     
     func testClearWeather_textAndColor() {

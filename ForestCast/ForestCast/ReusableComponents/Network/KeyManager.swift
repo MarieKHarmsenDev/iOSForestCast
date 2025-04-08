@@ -10,9 +10,28 @@ class KeyManager {
     
     private init() {}
     
-    var apiKey: String = ""
+    private var apiKey: String = ""
+    private var googleApiKey: String = ""
         
     func setApiKey(key: String) {
         apiKey = key
+    }
+    
+    func setGoogleApiKey(key: String) {
+        googleApiKey = key
+    }
+    
+    func getGoogleAPIKey() -> String {
+        // Should have some obfuscation/hashing here
+        removeSalt(key: googleApiKey, letter: "B")
+    }
+    
+    func getAPIKey() -> String {
+        // Should have some obfuscation/hashing here
+        removeSalt(key: apiKey, letter: "Z")
+    }
+    
+    private func removeSalt(key: String, letter: String) -> String {
+        key.replacingOccurrences(of: letter, with: "")
     }
 }

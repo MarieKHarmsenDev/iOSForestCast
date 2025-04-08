@@ -15,6 +15,17 @@ class HomeNetworkManagerMock: HomeNetworkManagerProtocol {
         self.responseType = responseType
     }
     
+    func fetchGooglePlacesKey(completion: @escaping(Result<String, NetworkError>) -> Void) {
+        switch responseType {
+        case .success:
+            return completion(.success("APIKeyMock"))
+        case .failure:
+            return completion(.failure(NetworkError.connectionError))
+        case .none:
+            return completion(.failure(NetworkError.noData))
+        }
+    }
+    
     func fetchAPIWeatherKey(completion: @escaping (Result<String, NetworkError>) -> Void) {
         switch responseType {
         case .success:

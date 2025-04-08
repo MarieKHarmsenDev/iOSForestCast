@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		52F840082D9EFC91002A6FA1 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 52F840072D9EFC91002A6FA1 /* FirebaseDatabase */; };
+		52F858A82DA5691E00DE6C53 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52F858A72DA5691E00DE6C53 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		52F83E1D2D9EAF15002A6FA1 /* ForestCast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForestCast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F83E2E2D9EAF17002A6FA1 /* ForestCastTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ForestCastTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F83E382D9EAF17002A6FA1 /* ForestCastUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ForestCastUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52F858A72DA5691E00DE6C53 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -101,6 +103,7 @@
 		52F83E142D9EAF15002A6FA1 = {
 			isa = PBXGroup;
 			children = (
+				52F858A72DA5691E00DE6C53 /* Launch Screen.storyboard */,
 				52F83E1F2D9EAF15002A6FA1 /* ForestCast */,
 				52F83E312D9EAF17002A6FA1 /* ForestCastTests */,
 				52F83E3B2D9EAF17002A6FA1 /* ForestCastUITests */,
@@ -242,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52F858A82DA5691E00DE6C53 /* Launch Screen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +436,7 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -471,6 +476,7 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
