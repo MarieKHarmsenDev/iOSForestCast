@@ -17,6 +17,8 @@
 
 "weatherScreen.rainy" = "RAINY";
 
+"weatherScreen.accessibility.favourites" = "Tap to add or remove from favourites";
+
 "locationPermission.alertTitle" = "App needs your location";
 
 "locationPermission.alertMessage" = "This app needs your location";
@@ -34,3 +36,13 @@
 "nearby.Parks" = "Nearby Parks";
 
 "nearby.NoParks" = "No parks found";
+
+"error.UnexpectedError" = "Unexpected Error";
+
+"loading.Loading" = "Loading...";
+
+"tab.Home" = "Home";
+
+"tab.Favourites" = "Favourites";
+
+"tab.Nearby" = "Nearby";

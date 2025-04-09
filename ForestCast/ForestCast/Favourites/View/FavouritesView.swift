@@ -26,7 +26,7 @@ struct FavouritesView: View {
     }
     
     private var favouritesListView: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Title2(text: "favourites.heading".localized, color: .black)
                 favouritesMap
@@ -46,6 +46,7 @@ struct FavouritesView: View {
         }.mapControls {
             MapUserLocationButton()
         }
+        .accessibilityHidden(true)
     }
     
     private var favouritesList: some View {
