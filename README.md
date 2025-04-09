@@ -33,14 +33,15 @@ Third party dependencies:
 Firbase - used to retrieve API key
 
 How to build the project: 
-To run this project either install Firebase through Swift package manager, or insert an API key into the URL in KeyManager and the application will work.
+To run this project either install Firebase through Swift package manager, or insert an API key into KeyManager and the application will work.
 
 Conventions, architecture, and general considerations:
-Using MVVM for clear separation between logic and UI. Separating the network layers for readability. Injecting the FavouritesManagerProtocol, HomeNetworkManagerProtocol and CLLocationManager so we can mock the response and use it for unit testing. Mocked out the CLLocationManager to ensure we are moving the state of the project from loading to showing content when the location is fetched.
+Using MVVM for clear separation between logic and UI. Separating the network layers for readability. Injecting the FavouritesManagerProtocol, HomeNetworkManagerProtocol and CLLocationManager to mock the response and use it for unit testing. I mocked the CLLocationManager to ensure we are moving the state of the project from loading to showing content when the location is fetched.
 Used user defaults for favourites for persistent data storing as the struct to be stored is lightweight and reading from user defaults is fast.
-WeatherView being reused in the favourites section, so designed with reusability in mind
+WeatherView being reused in the favourites section, so is completly reusable, can either pass in the location - which the application uses to show weather for a stored favourite, or it uses the current location that is stored in LocationManager.
+LocationMnaager was created as a way to reuse the current location throughout the application, so nearby parks was able to get the location, without requesting it again.
 
 Any additional notes that can demonstrate your knowledge:
-Used Firebase to not store the API on the client side, there could be additional hashing and better salting algorithms here to keep that safe. 
-The Network logger only prints the network issue, but this could be connected to New relic or similar to monitor issues arising in the app.
+Used Firebase to not store the API on the client side, there could be additional hashing and better salting algorithms for the keys to keep that safe. 
+The Network logger only prints the network issue, but this could be refactored to connect to New relic or similar to monitor issues arising in the app. Woudn't keep the print statements in the application if releasing it.
 
