@@ -10,7 +10,7 @@ import MapKit
 class FavourtiesViewModel: NSObject, ObservableObject {
     private var favouritesManager = FavouritesManager()
     @Published var favourites: [FavouritesWeatherModel] = []
-    @State var position: MapCameraPosition = .automatic
+    @State var position: MapCameraPosition = .region(.init(.world))
     @State var selectedItem: MKMapItem?
     
     func fetchFavourites() {

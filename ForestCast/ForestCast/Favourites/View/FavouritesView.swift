@@ -14,7 +14,7 @@ struct FavouritesView: View {
         VStack {
             if viewModel.favourites.isEmpty {
                 Spacer()
-                emptyFavourites
+                emptyFavouritesView
             } else {
                 favouritesListView
             }
@@ -52,25 +52,26 @@ struct FavouritesView: View {
         List() {
             ForEach(viewModel.favourites) { favourite in
                 NavigationLink(favourite.name,
-                               destination: WeatherView(viewModel: WeatherViewModel(location: favourite.location, shouldShowFavourites: false,
+                               destination: WeatherView(viewModel: WeatherViewModel(location: favourite.location,
+                                                                                    shouldShowFavourites: false,
                                                                                     network: WeatherNetworkManager(todaysDate: Date()))))
             }
             .onDelete(perform: removeRows)
         }
     }
     
-    private func removeRows(at offsets: IndexSet) {
-        for index in offsets {
-            viewModel.deleteFavourite(favourite: viewModel.favourites[index])
-        }
-    }
-    
-    private var emptyFavourites: some View {
+    private var emptyFavouritesView: some View {
         VStack {
             Title2(text: "favourites.heading".localized, color: .black)
             Spacer()
             Regular(text: "favourites.noFavourites".localized, color: .black)
             Spacer()
+        }
+    }
+    
+    private func removeRows(at offsets: IndexSet) {
+        for index in offsets {
+            viewModel.deleteFavourite(favourite: viewModel.favourites[index])
         }
     }
 }

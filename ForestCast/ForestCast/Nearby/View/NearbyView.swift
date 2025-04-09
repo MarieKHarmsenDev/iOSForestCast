@@ -39,6 +39,9 @@ struct NearbyContentView: View {
         Title2(text: "nearby.Parks".localized, color: .black)
         List() {
             if let places = viewModel?.places {
+                if places.isEmpty {
+                   Regular(text: "nearby.NoParks".localized, color: .black)
+               }
                 ForEach(places, id: \.self) { place in
                     Regular(text: place.name, color: .black)
                 }

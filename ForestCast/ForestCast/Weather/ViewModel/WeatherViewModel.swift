@@ -9,15 +9,15 @@ import CoreLocation
 
 class WeatherViewModel: NSObject, ObservableObject {
     private var location: Location?
-    var shouldShowFavourites: Bool = false
-    private var network: WeatherNetworkManagerProtocol?
-    
     private var networkLogger = NetworkLogger()
-    private var favourites = FavouritesManager()
+
+    var shouldShowFavourites: Bool = false
+    var network: WeatherNetworkManagerProtocol?
+    
+    var favourites: FavouritesManagerProtocol?
 
     var currentWeather: CurrentWeatherModel?
     var forecastWeather: ForecastWeatherModel?
-    var currentLocationAsFavourite: FavouritesWeatherModel?
 
     @Published var shouldShowError = false
     @Published var isLoading = true
@@ -25,15 +25,18 @@ class WeatherViewModel: NSObject, ObservableObject {
     
     init(location: Location? = Location(latitude: LocationValuesManager.shared.latitude, longitude: LocationValuesManager.shared.longitude),
          shouldShowFavourites: Bool = true,
-         network: WeatherNetworkManagerProtocol) {
+         network: WeatherNetworkManagerProtocol,
+         favourites: FavouritesManagerProtocol? = nil) {
         super.init()
         self.location = location
         self.network = network
         self.shouldShowFavourites = shouldShowFavourites
-        fetchData()
+        if let favourites = favourites {
+            self.favourites = favourites
+        }
     }
     
-    private func fetchData() {
+    func fetchData() {
         let group = DispatchGroup()
         guard let location = location else {
             return
@@ -47,14 +50,6 @@ class WeatherViewModel: NSObject, ObservableObject {
             switch result {
             case .success(let weather):
                 self?.currentWeather = weather
-                guard let weather = weather else { return }
-                var name = weather.name
-                if name.isEmpty {
-                    name = "Lat:\(location.latitude) Lon: \(location.longitude)"
-                }
-                self?.currentLocationAsFavourite = FavouritesWeatherModel(id: weather.id,
-                                                                          name: name,
-                                                                          location: location)
                 group.leave()
             case .failure(let error):
                 self?.networkLogger.logError("Failed to fetch current weather \(error)")
@@ -111,22 +106,36 @@ class WeatherViewModel: NSObject, ObservableObject {
             return ""
         }
     }
-    
+}
+
+// MARK: Favourites
+
+extension WeatherViewModel {
     func updateFavourites() {
-        guard let currentLocationAsFavourite = currentLocationAsFavourite else { return }
-        if favourites.contains(currentLocationAsFavourite) {
-            favourites.remove(currentLocationAsFavourite)
+        guard let currentWeatherFavourite = currentWeatherFavourite, let favourites = favourites else { return }
+        if favourites.contains(currentWeatherFavourite) {
+            favourites.remove(currentWeatherFavourite)
         } else {
-            favourites.add(currentLocationAsFavourite)
+            favourites.add(currentWeatherFavourite)
         }
         updateIcon()
     }
     
     func updateIcon() {
-        guard let currentLocationAsFavourite = currentLocationAsFavourite else { return }
+        guard let currentWeatherFavourite = currentWeatherFavourite, let favourites = favourites else { return }
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.containsFavourite = favourites.contains(currentLocationAsFavourite)
+            self.containsFavourite = favourites.contains(currentWeatherFavourite)
         }
     }
+    
+    var currentWeatherFavourite: FavouritesWeatherModel? {
+        guard let currentWeather = currentWeather, let location = location else { return nil }
+        var favouriteName = currentWeather.name
+        if favouriteName.isEmpty {
+            favouriteName = "Lat:\(location.latitude) Lon: \(location.longitude)"
+        }
+        return FavouritesWeatherModel(id: currentWeather.id, name: favouriteName, location: location)
+    }
 }
+

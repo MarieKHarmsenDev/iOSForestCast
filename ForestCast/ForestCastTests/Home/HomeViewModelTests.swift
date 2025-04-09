@@ -23,6 +23,16 @@ class HomeViewModelTests: XCTestCase {
     var sut: HomeViewModel!
     var locationManager = CLLocationManagerMock()
     
+    override func setUp() {
+        super.setUp()
+        sut = createSUT(response: .success)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        sut = nil
+    }
+    
     func createSUT(response: ResponseType) -> HomeViewModel {
         return HomeViewModel(locationManager: locationManager,
                              network: HomeNetworkManagerMock(responseType: response))
@@ -34,12 +44,17 @@ class HomeViewModelTests: XCTestCase {
     }
     
     func testAPIKeyRetrieved() {
-        sut = createSUT(response: .success)
         let locationMock = CLLocation(latitude: 52.1, longitude: 53.1)
         locationManager.delegate?.locationManager?(locationManager, didUpdateLocations: [locationMock])
         XCTAssertTrue(sut.hasFetchedKey)
         XCTAssertNotNil(LocationValuesManager.shared.latitude)
         XCTAssertNotNil(LocationValuesManager.shared.longitude)
+        XCTAssertNotNil(KeyManager.shared.getAPIKey())
         XCTAssertTrue(sut.hasFetchedLocation)
+    }
+    
+    func testGoogleAPIKeyRetrieved() {
+        let locationMock = CLLocation(latitude: 52.1, longitude: 53.1)
+        XCTAssertNotNil(KeyManager.shared.getGoogleAPIKey())
     }
 }

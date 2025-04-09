@@ -32,3 +32,5 @@
 "favourites.noFavourites" = "There are no favourites saved yet.";
 
 "nearby.Parks" = "Nearby Parks";
+
+"nearby.NoParks" = "No parks found";
