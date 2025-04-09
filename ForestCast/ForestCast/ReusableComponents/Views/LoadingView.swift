@@ -13,7 +13,7 @@ struct LoadingView: View {
             ProgressView()
                 .padding()
             
-            Regular(text: "Loading...", color: .black)
+            Regular(text: "loading.Loading".localized, color: .black)
         }
     }
 }

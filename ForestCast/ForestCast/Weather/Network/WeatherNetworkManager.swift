@@ -20,6 +20,14 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         self.todaysDate = todaysDate
     }
     
+    private func isTodaysDate(date: String) -> Bool {
+        return date == todaysDate?.dateAsString
+    }
+}
+
+//MARK: CurrentWeather
+extension WeatherNetworkManager {
+    
     func fetchCurrentWeatherData(lat: String, long: String, completion: @escaping(Result<CurrentWeatherModel?, NetworkError>) -> Void) {
         let apiKey = KeyManager.shared.getAPIKey()
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
@@ -28,22 +36,6 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         }
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             if let data = data, let decodedData = self?.decodeCurrentWeatherData(data) {
-                completion(.success(decodedData))
-            } else {
-                completion(.failure(.noData))
-            }
-        }
-        task.resume()
-    }
-    
-    func fetchForecastWeatherData(lat: String, long: String, completion: @escaping(Result<ForecastWeatherModel?, NetworkError>) -> Void) {
-        let apiKey = KeyManager.shared.getAPIKey()
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
-            completion(.failure(.malformedURL))
-            return
-        }
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            if let data = data, let decodedData = self?.decodeForecastWeatherData(data, currentHour: Calendar.current.component(.hour, from: Date())) {
                 completion(.success(decodedData))
             } else {
                 completion(.failure(.noData))
@@ -76,6 +68,26 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             networkLogger.logError("Failed to decode current weather")
             return nil
         }
+    }
+
+}
+//MARK: ForecastWeather
+
+extension WeatherNetworkManager {
+    func fetchForecastWeatherData(lat: String, long: String, completion: @escaping(Result<ForecastWeatherModel?, NetworkError>) -> Void) {
+        let apiKey = KeyManager.shared.getAPIKey()
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(long)&appid=\(apiKey)&units=metric") else {
+            completion(.failure(.malformedURL))
+            return
+        }
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            if let data = data, let decodedData = self?.decodeForecastWeatherData(data, currentHour: Calendar.current.component(.hour, from: Date())) {
+                completion(.success(decodedData))
+            } else {
+                completion(.failure(.noData))
+            }
+        }
+        task.resume()
     }
     
     func decodeForecastWeatherData(_ data: Data, currentHour: Int) -> ForecastWeatherModel? {
@@ -128,9 +140,5 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             if forecastResults.count == 5 { break }
         }
         return forecastResults
-    }
-    
-    private func isTodaysDate(date: String) -> Bool {
-        return date == todaysDate?.dateAsString
     }
 }

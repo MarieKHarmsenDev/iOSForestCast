@@ -17,7 +17,7 @@ struct ErrorView: View {
                 .foregroundColor(Color.primary)
                 .padding()
             
-            Regular(text: "Unexpected Error", color: .black)
+            Regular(text: "error.UnexpectedError".localized, color: .black)
         }
     }
 }

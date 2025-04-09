@@ -68,6 +68,7 @@ struct WeatherContentView: View {
             .resizable()
             .aspectRatio(contentMode: .fill)
             .clipped()
+            .accessibilityHidden(true)
             .ignoresSafeArea()
             .frame(maxHeight: isIPad ? 800 : 300)
             .overlay(
@@ -94,6 +95,7 @@ struct WeatherContentView: View {
         VStack {
             RegularBold(text: temperature)
             Regular(text: description)
+                .accessibilityElement(children: .contain)
         }
     }
     
@@ -118,6 +120,7 @@ struct WeatherContentView: View {
         .overlay(
             Image(iconName)
                 .resizable()
+                .accessibilityHidden(true)
                 .frame(width: 24, height: 24),
             alignment: .center)
     }
@@ -134,11 +137,13 @@ struct WeatherContentView: View {
                     
                     Image(systemName: "heart")
                         .foregroundColor(.white)
-                        .padding()
+                        .padding(8)
+                        .accessibilityHidden(true)
                 }
             }
             .frame(width: 44, height: 44)
         }
+        .accessibilityLabel("weatherScreen.accessibility.favourites".localized)
     }
 }
 

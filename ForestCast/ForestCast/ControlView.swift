@@ -10,13 +10,13 @@ import SwiftUI
 struct ControlView: View {
     var body: some View {
         TabView {
-            Tab("Home", systemImage: "house") {
+            Tab("tab.Home".localized, systemImage: "house") {
                 HomeView()
             }
-            Tab("Favourites", systemImage: "heart.fill") {
+            Tab("tab.Favourites".localized, systemImage: "heart.fill") {
                 FavouritesView()
             }
-            Tab("Nearby", systemImage: "location") {
+            Tab("tab.Nearby".localized, systemImage: "location") {
                 NearbyView()
             }
         }
