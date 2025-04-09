@@ -2,7 +2,7 @@
 iOS Application to display the weather, forecast, save locations to favourites and display on a map, show nearby parks.
 
 CICD:
-[![Build Status](https://app.bitrise.io/app/964b12ce-4fb9-4734-8c39-48df53b128a3/status.svg?token=BWvOaWgsR4sy6xth76GoJg&branch=develop)](https://app.bitrise.io/app/964b12ce-4fb9-4734-8c39-48df53b128a3) <br />
+[![Build Status](https://app.bitrise.io/app/964b12ce-4fb9-4734-8c39-48df53b128a3/status.svg?token=BWvOaWgsR4sy6xth76GoJg&branch=main)](https://app.bitrise.io/app/964b12ce-4fb9-4734-8c39-48df53b128a3) <br />
 Code coverage:
 ![Codecov](https://codecov.io/gh/user/repo/branch/main/graph/badge.svg) <br />
 Static code analysis:
