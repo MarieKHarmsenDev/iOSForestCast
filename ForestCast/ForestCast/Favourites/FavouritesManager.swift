@@ -7,7 +7,14 @@
 
 import SwiftUI
 
-class FavouritesManager: ObservableObject {
+protocol FavouritesManagerProtocol {
+    func getFavouriteLocations() -> [FavouritesWeatherModel]
+    func contains(_ location: FavouritesWeatherModel) -> Bool
+    func add(_ location: FavouritesWeatherModel)
+    func remove(_ location: FavouritesWeatherModel)
+}
+
+class FavouritesManager: ObservableObject, FavouritesManagerProtocol {
     private let key = "Favourites"
         
     func getFavouriteLocations() -> [FavouritesWeatherModel] {

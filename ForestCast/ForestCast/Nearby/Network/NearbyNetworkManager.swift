@@ -19,20 +19,24 @@ class NearbyNetworkManager: NearbyNetworkManagerProtocol {
         
         let key = KeyManager.shared.getGoogleAPIKey()
         
-        guard let url = URL(string: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(LocationValuesManager.shared.latitude),\(LocationValuesManager.shared.longitude)&radius=1000&key=\(key)") else {
+        if key.isEmpty {
+            completion(.failure(.connectionError))
+        }
+        
+        guard let url = URL(string: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(LocationValuesManager.shared.latitude),\(LocationValuesManager.shared.longitude)&radius=1000&type=park&key=\(key)") else {
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             if let data = data {
-                guard let nearbyPlaces = self?.decodeJSON(data: data) else { return }
+                guard let nearbyPlaces = self?.decodePlacesJSON(data: data) else { return }
                 completion(.success(nearbyPlaces))
             }
         }
         task.resume()
     }
     
-    private func decodeJSON(data: Data) -> [Place]? {
+    func decodePlacesJSON(data: Data) -> [Place]? {
         do {
             let json = try JSONDecoder().decode(NearbyPlacesModel.self, from: data)
             return json.results

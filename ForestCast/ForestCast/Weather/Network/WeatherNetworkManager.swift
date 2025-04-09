@@ -105,7 +105,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         }
     }
     
-    private func getFilteredForecastDaysBasedOnClosestTime(allForecastDays: [ForecastDays], closestHour: Int) -> [ForecastDays] {
+    func getFilteredForecastDaysBasedOnClosestTime(allForecastDays: [ForecastDays], closestHour: Int) -> [ForecastDays] {
         var forecastResults = [ForecastDays]()
         let groupedByDay = Dictionary(grouping: allForecastDays) { entry in
             return String(entry.date.day)

@@ -1,0 +1,239 @@
+{
+    "html_attributions": [],
+    "results": [
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 51.29703800000001,
+                    "lng": -0.1056677
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 51.29836478029151,
+                        "lng": -0.104762719708498
+                    },
+                    "southwest": {
+                        "lat": 51.29566681970851,
+                        "lng": -0.107460680291502
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+            "icon_background_color": "#4DB546",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+            "name": "Coulsdon Common",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 2976,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/112470956796795067098\">Martin Burke</a>"
+                    ],
+                    "photo_reference": "AeeoHcKotS2V1xGwF1jrTfJLOEgr2xYWUjbvU4LJgkn0qpYgClfTdByTQLzf0Cu3OoT7dMXSVGLkMmix-Lpm7Umvyb-HiFYm5o2eYwnkKeYVBA8QSQ9ysh1zS7-K0ROmoz4YSC3bD0stayomyeWzFVWt6Vbk9Wwnn5R12A8EUpq2usQwvS0Qeff6cIBIse0yZlxjJPZr8EepwqtR-2IUUrLrQ_XSUF8eyrsD0ro8gtvzuY14yKhzymy6uS-LJkppoKrNVtk2_-xOdjsgmL5jXs3976ji6Q2zF3Rs5udRapinjnYUI-BbHsu1XftehffnH6qVkcMbAJYbfcF1m4NBFq3fdef_XnRTucXi0BrT6aMLpHLYRe-GPRFdPiFXdS12gfMY6uxS9gJSQtprYoH6EXAIfMD71kSchx1Q6tN7Uu2oAd9irQXVYrySpCK6t0m3W8HEz1AGvFgarD3Ph1fWe_V-xrQ_qrWyd_ij0TVgdRjgEBF6JXX3i_TzBSx_wIiUHB0fYMy1V4z0HT5oG8x3aHZe2LiCXOylZeqKwDoTdZnaTyNXtflRXWSZBzcGDVv-XCD95AXKlJoxefTgUO2c-mNsbObgoA85MSOIM5qTzM9Uz6ijliGklfOlqs7qebeoKwj0vSp4gg",
+                    "width": 3968
+                }
+            ],
+            "place_id": "ChIJ23EcWjD8dUgRABqWkj8LsLg",
+            "plus_code": {
+                "compound_code": "7VWV+RP Caterham, UK",
+                "global_code": "9C3X7VWV+RP"
+            },
+            "rating": 4.5,
+            "reference": "ChIJ23EcWjD8dUgRABqWkj8LsLg",
+            "scope": "GOOGLE",
+            "types": [
+                "park",
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 137,
+            "vicinity": "Common, Coulsdon, Caterham"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 51.2977717,
+                    "lng": -0.09779530000000002
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 51.2989194802915,
+                        "lng": -0.09594576970849798
+                    },
+                    "southwest": {
+                        "lat": 51.2962215197085,
+                        "lng": -0.09864373029150204
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+            "icon_background_color": "#4DB546",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+            "name": "South London Downs National Nature Reserve",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 4032,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/109744490624614529695\">Shannon Murphy</a>"
+                    ],
+                    "photo_reference": "AeeoHcKnQNws1dyeUEe58mZQt25ZoQMD_I6SMU0_8LabZD6FIqGEb5HxlszZV-yvgBGesCD1lXsaI3Q_xxX3F_dbHXF3ykgSg8tuy6SnclZfrfs75a9U-apciLIuCvZGd3T51yjf-YlOcuZcbx5gZXWcaLVoTzmeyRRklhFHlRGT1bF_NQvysvF_Qy8zazhkqIAURSEGuVqk4iHH1nAQVKC7npAi2iuMnmsrEiBPb41DyR2vRLim5yi1AdERYQERyyV_lGUyP8grDpxeRIX4Z8kiyOAVsr4Hx4T6ZyLEH9GMC0Y4fhXRFKE9ecNZL7EQwJw2L75NIynk4gB3-_31_2dfClGrdiiLCoCs32Fd0suTVXK_8kY8-IUzxJwjkqVgQvmSywos1WncTZMhCEjVDOyJTs1n3yqhfzVfR77VIWa9QL3aid4DLHDlr5l1I3q4bvqGeQhpFbVNwlPnNl_qYArPMICn312XuwHpGKWNBx8lEu-IRr31_f8K4VtMmP6vS0QszTSMeVtMiDRxu0Ge-rx_nRP-HbN_r4HpS54okV6jKnrKfLtrj-UiDnyF0SRyRdG_NFfTJxTDTBop3KjMiYUO8RF9RPHRayJs-l6P8o7RdXy-1WOkEh0IbKljuQCQ1Ol4",
+                    "width": 3024
+                }
+            ],
+            "place_id": "ChIJZxENQCX9dUgRmYO_cUYvK1Y",
+            "plus_code": {
+                "compound_code": "7WX2+4V Caterham, UK",
+                "global_code": "9C3X7WX2+4V"
+            },
+            "rating": 4.7,
+            "reference": "ChIJZxENQCX9dUgRmYO_cUYvK1Y",
+            "scope": "GOOGLE",
+            "types": [
+                "park",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 9,
+            "vicinity": "South London Downs NNR, Caterham"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 51.297354,
+                    "lng": -0.09766819999999998
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 51.29867428029149,
+                        "lng": -0.09629026970849797
+                    },
+                    "southwest": {
+                        "lat": 51.2959763197085,
+                        "lng": -0.09898823029150203
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+            "icon_background_color": "#4DB546",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+            "name": "Merlewood Estate Office",
+            "opening_hours": {
+                "open_now": false
+            },
+            "photos": [
+                {
+                    "height": 1982,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/117670445388057686982\">Pip Toogood</a>"
+                    ],
+                    "photo_reference": "AeeoHcIyFwwivtOW-GEZTrhxxWXaQeC8Xd79AfD0jER6BR0flGjtrEKe7vBDw_3ONFwIsqZLV4vyn3pqN6A5ZPZlq6xBBFMU8DvB_q6MvGIwclcDvhepYVb5cpe-O6io2rwbVxGUvmYzF5OxSdI5eaoMchDZdZfaXLq1hTe2obN12ZAyNDFtqVPV7_Ius30SJA0uGeTzVqnncn5ICKL11ytp1N9qeLV03wA5C3LCZGBSyW_cMnmgEmyPbsBp1Ck9LbmJt4075E9C2UQcF_7CHjr9xdypq5eM8ixkAGlUgX_TKHCVyJSbSQIQTUugAZ7Za8lePTl2eQtnufXNohV1WCSJGUlCBgJJdOyKxmwYil8Cr5sWaJbz5TN5_eoXjlE_hdImvuEwlFllHqZudLiJKk2Bg5Q9LR1RJMDX2lxFucgeMx3PoXFTKXOBo4Qrs3qiT7XbyZ69EgV02cvVLgL9lrXq2J49IMkUFvt0yZolTRnSxURohbh62L0r9QqUKo4ZgS8wk5HXTEx8KRFXyko_M51hhWaVeGriHw0JMRe24zR4nE64ok4u_aZblOULjeiY6F719ZDcIZ5M213dml7-oK5mMu0EsDAKVtsayklhJIWnJKUqvk9mXhFbrII5YjxvsS3smkSyGw",
+                    "width": 3776
+                }
+            ],
+            "place_id": "ChIJV4Q7ICn8dUgRwakVOj_t458",
+            "plus_code": {
+                "compound_code": "7WW2+WW Caterham, UK",
+                "global_code": "9C3X7WW2+WW"
+            },
+            "rating": 4.8,
+            "reference": "ChIJV4Q7ICn8dUgRwakVOj_t458",
+            "scope": "GOOGLE",
+            "types": [
+                "park",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 17,
+            "vicinity": "Ninehams Road, Caterham"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 51.29474039999999,
+                    "lng": -0.0907955
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 51.2961017302915,
+                        "lng": -0.08937976970849797
+                    },
+                    "southwest": {
+                        "lat": 51.2934037697085,
+                        "lng": -0.09207773029150203
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+            "icon_background_color": "#4DB546",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+            "name": "Graham's Walk",
+            "photos": [
+                {
+                    "height": 3000,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/116683066965477678774\">andy parr</a>"
+                    ],
+                    "photo_reference": "AeeoHcLktJeZBiYM7UH-Le29Nco3wwNCIcc_6gQBpPf4ZetbLGlH7NuALn5_PICDnwLzDVduDJHBTj74kNpDZjz4PJZlgYkKTwpI8c1iUzdl9uooaOiM0nBdI5R44V_f5S_8XT5GwfZyN6KO1bHmRMRgYl698_P4cYArhcFbIo5DIdY516pHtrBW0IResZ2oCOJOIByqRTGevLD6D0-4-Rmz2UriXFoelC6GmXkk3PrhjCaQs7NLE5Cw-w7mOTIlXYxkHoVMJu3sQ245J3Ch2L1eKC9rrecYGs9zhRDIxBZaPur7hiO5nMLnab2ludcCzOpBOnvZ7bgmc0R3GYy0yhmVAouAIBhfY2D9EAgp5jPBiE8beuto8UxXxr3vLhfpxPOdB6yvCEDrXJsfdat4NGurJB2BK88Tyra_Ac7HYdzIE2Q00HJHV3ve6gWoRyQNIcWAg99z8I8C42gtGleBM2EgjkziP1L4V66GbLLGL4nMIbgHbj31ve5F7I7P-Ms7L-aeKG8ebROooU1EcUKoOfZN_99swINIcytFcbTi0mNKW-UfnrquesdAqh1ZdiRP-2M7WmQXHciJowoQM3c3SsRI7c_G5hWRHRAH6IUs0mS1w2_Nce7dk3Cu7UHChvVQyHTDr2T6nT_2",
+                    "width": 4000
+                }
+            ],
+            "place_id": "ChIJweRXpd__dUgR4zi5qqRstQ4",
+            "plus_code": {
+                "compound_code": "7WV5+VM Caterham, UK",
+                "global_code": "9C3X7WV5+VM"
+            },
+            "rating": 5,
+            "reference": "ChIJweRXpd__dUgR4zi5qqRstQ4",
+            "scope": "GOOGLE",
+            "types": [
+                "park",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 3,
+            "vicinity": "57 Buxton Lane, Caterham"
+        },
+        {
+            "geometry": {
+                "location": {
+                    "lat": 51.30864099999999,
+                    "lng": -0.1045439
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 51.31184840324523,
+                        "lng": -0.1012016422038659
+                    },
+                    "southwest": {
+                        "lat": 51.30751556452918,
+                        "lng": -0.1078163267797209
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+            "icon_background_color": "#4DB546",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+            "name": "Betts Mead Recreation Ground",
+            "place_id": "ChIJa8PlBdL9dUgRysJTaiQDzZ4",
+            "reference": "ChIJa8PlBdL9dUgRysJTaiQDzZ4",
+            "scope": "GOOGLE",
+            "types": [
+                "park",
+                "premise",
+                "point_of_interest",
+                "establishment"
+            ]
+        }
+    ],
+    "status": "OK"
+}

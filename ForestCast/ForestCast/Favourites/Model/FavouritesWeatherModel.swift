@@ -7,7 +7,7 @@
 
 import MapKit
 
-struct FavouritesWeatherModel: Codable, Identifiable {
+struct FavouritesWeatherModel: Codable, Identifiable, Equatable {
     let id: Int
     let name: String
     let location: Location

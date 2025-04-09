@@ -11,12 +11,17 @@ struct WeatherView: View {
     @StateObject var viewModel: WeatherViewModel
     
     var body: some View {
-        if viewModel.shouldShowError {
-            ErrorView()
-        } else if viewModel.isLoading {
-            LoadingView()
-        } else {
-            WeatherContentView(viewModel: viewModel)
+        VStack {
+            if viewModel.shouldShowError {
+                ErrorView()
+            } else if viewModel.isLoading {
+                LoadingView()
+            } else {
+                WeatherContentView(viewModel: viewModel)
+            }
+        }
+        .onAppear{
+            viewModel.fetchData()
         }
     }
 }
@@ -138,5 +143,5 @@ struct WeatherContentView: View {
 }
 
 #Preview {
-    WeatherView(viewModel: WeatherViewModel(location: Location(latitude: 123, longitude: 11), shouldShowFavourites: true, network: WeatherNetworkManager(todaysDate: Date())))
+    WeatherView(viewModel: WeatherViewModel(location: Location(latitude: 123, longitude: 11), shouldShowFavourites: true, network: WeatherNetworkManager(todaysDate: Date()), favourites: FavouritesManager()))
 }
